@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const wrap = require('./wrapper');
-const wrapper = wrap.wrapper;
 const multer = require('multer')
 const path = require('path');
 const cors = require('cors');
-const bodyparser = require('body-parser');
 const app = express();
 
 let corsOption = {
@@ -17,7 +14,7 @@ app.use(cors(corsOption))
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb("../")
+        cb(null, path.resolve("Users", "Downloads", "../../../../avatye_client/public/"));
     },
     filename : function(req, file, cb) {
         const ext = path.extname(file.originalname);
@@ -29,13 +26,16 @@ const upload = multer({
     storage : storage
 })
 
+//이미지 저장
 router.post('/', upload.single('img'), async(req, res)=> {
-    const image= req.file.path;
-    console.log(req.file);
+    let image= req.file.path;
+    let imagePath = "/" + image.split('/')[6];
+
+    //이미지 미리보기
     if(image === undefined){
         return res.send("이미지없음");
     }
-    res.send("성공! ><");
+    res.send(image);
 })
 
 

@@ -20,8 +20,9 @@ function findProject(req) {
 }
 
 // 프로젝트 등록하기
-function createProject(req) {
-    const {cateIndex, userIndex, proTitle, proSummary, proProfile, proGoal, proBeginDate, proEndDate, proContents}= req.body;
+function createProject(req, imagePath) {
+    const {cateIndex, userIndex, proTitle, proSummary, proGoal, proBeginDate, proEndDate, proContents}= req.body;
+    console.log(imagePath)
 
     const query = `insert into project (cateIndex, userIndex, proTitle, proSummary, proProfile, proGoal, proBeginDate, proEndDate, proContents) values (${cateIndex}, ${userIndex}, '${proTitle}', '${proSummary}', '${proProfile}', ${proGoal}, '${proBeginDate}', '${proEndDate}', '${proContents}')`
     return con(query);
