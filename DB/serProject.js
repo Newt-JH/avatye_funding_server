@@ -8,7 +8,7 @@ const con = cons.con;
 function readProject() {
     const query = 'select * from project'
 
-    return conpro(query);
+    return conpro(query); 
 }
 
 // 프로젝트 등록하기
