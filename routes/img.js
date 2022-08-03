@@ -4,6 +4,8 @@ const multer = require('multer')
 const path = require('path');
 const cors = require('cors');
 const app = express();
+const wrap = require('./wrapper');
+const wrapper = wrap.wrapper;
 
 let corsOption = {
     origin : "*",
@@ -27,16 +29,13 @@ const upload = multer({
 })
 
 //이미지 저장
-router.post('/', upload.single('img'), async(req, res)=> {
+router.post('/', upload.single('img'), wrapper(async(req, res)=> {
     let image= req.file.path;
-    let imagePath = "/" + image.split('/')[6];
-
     //이미지 미리보기
     if(image === undefined){
         return res.send("이미지없음");
     }
     res.send(image);
-})
-
+}));
 
 module.exports = router;
