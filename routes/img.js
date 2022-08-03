@@ -16,7 +16,7 @@ app.use(cors(corsOption))
 
 const storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb(null, path.resolve("Users", "Downloads", "../../../../avatye_client/public/"));
+        cb(null, path.resolve("Users", "Downloads", "../../../../avatye_client/public/imgs/"));
     },
     filename : function(req, file, cb) {
         const ext = path.extname(file.originalname);

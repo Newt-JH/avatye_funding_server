@@ -11,14 +11,6 @@ function readProject() {
     return conpro(query);
 }
 
-// proID에 해당하는 프로젝트 상세 불러오기
-function findProject(req) {
-    const proIndex = req.params.id;
-    const query = `select * from project where proIndex = ${proIndex}`
-
-    return conpro(query);
-}
-
 // 프로젝트 등록하기
 function createProject(req) {
     const {cateIndex, userIndex, proTitle, proSummary, proProfile, proGoal, proBeginDate, proEndDate, proContents}= req.body;
@@ -27,8 +19,25 @@ function createProject(req) {
     return con(query);
 }
 
+// proID에 해당하는 프로젝트 상세 불러오기
+function findProject(req) {
+    const proIndex = req.params.id;
+    const query = `select * from project where proIndex = ${proIndex}`
+
+    return conpro(query);
+}
+
+// 카테고리에 해당하는 프로젝트 불러오기
+function readProjectByCate(req) {
+    const category = req.params.category;
+    const query = `select * from project p join category c on p.cateIndex = c.cateIndex where cateName = ${category}`
+
+    return conpro(query);
+}
+
 module.exports = {
     readProject,
     createProject,
-    findProject
+    findProject,
+    readProjectByCate
 }
