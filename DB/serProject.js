@@ -13,17 +13,17 @@ function readProject() {
 
 // proID에 해당하는 프로젝트 상세 불러오기
 function findProject(req) {
-    const proIndex = req.params.id;
-    const query = `select * from project where proIndex = ${proIndex}`
+    const projectIndex = req.params.id;
+    const query = `select * from project where projectIndex = ${projectIndex}`
 
     return conpro(query);
 }
 
 // 프로젝트 등록하기
 function createProject(req) {   
-    const {cateIndex, userIndex, proTitle, proSummary, proProfile, proGoal, proBeginDate, proEndDate, proContents}= req.body;
+    const {cateIndex, userID, longTitle, shortTitle, summary, profileIMG, goalprice, beginDate, endDate, contents, video, webAddress, searchTag}= req.body;
 
-    const query = `insert into project (cateIndex, userIndex, proTitle, proSummary, proProfile, proGoal, proBeginDate, proEndDate, proContents) values (${cateIndex}, ${userIndex}, '${proTitle}', '${proSummary}', '${proProfile}', ${proGoal}, '${proBeginDate}', '${proEndDate}', '${proContents}')`
+    const query = `insert into project (cateIndex, userID, longTitle, shortTitle, summary, profileIMG, goalprice, beginDate, endDate, contents, video, webAddress, searchTag) values (${cateIndex}, ${userID}, '${longTitle}', '${shortTitle}', '${summary}', '${profileIMG}', ${goalprice}, '${beginDate}', '${endDate}', '${contents}', '${video}', '${webAddress}', '${searchTag}')`
     return con(query);
 }
 
@@ -31,8 +31,8 @@ function createProject(req) {
 function readProjectByCate(req) {
     const category = req.params.category;
 
-    //const query = `select * from project p join category c on p.cateIndex = c.cateIndex where cateName = ${category}`
-    const query = `select proIndex, p.cateIndex, c.cateName, proLongTitle, proSummary, proProfile, proEndDate, proNowAmount from project p join category c on p.cateIndex = c.cateIndex where cateName = '${category}'`
+    //const query = `select * from project p join category c on p.cateIndex = c.cateIndex where name = ${category}`
+    const query = `select projectIndex, p.cateIndex, c.name, longTitle, summary, profileIMG, endDate, nowAmount from project p join category c on p.cateIndex = c.cateIndex where name = '${category}'`
 
     return conpro(query);
 }
