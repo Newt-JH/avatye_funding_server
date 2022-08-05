@@ -12,6 +12,15 @@ router.get('/', wrapper(async function(req, res, next) {
     
 }));
 
+
+//프로젝트 상세 불러오기
+router.get('/projectDetail/:id', wrapper(async function(req, res) {
+
+    let f = await db.findProject(req);
+    res.send(f);
+}));
+
+
 //프로젝트 만들기
 router.post('/createProject', function(req, res) {
 
@@ -19,16 +28,10 @@ router.post('/createProject', function(req, res) {
     res.send(f);
 })
 
-//프로젝트 상세 불러오기
-router.get('/projectDetail/:id', wrapper(async function(req, res) {
-
-    let f = await db.findProject(req);
-    res.send(f);
-}))
 
 //카테고리에 해당하는 프로젝트 불러오기
 router.get('/:category', wrapper(async function(req, res) {
-    
+
     let f = await db.readProjectByCate(req);
     res.send(f);
 
