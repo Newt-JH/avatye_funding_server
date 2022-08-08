@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../DB/serUserDB');
-const middle = require('../middleware/userMiddleWare');
-const util = require('../util/userUtil');
-const wrap = require('./wrapper');
+const db = require('../../DB/user/serUserDB');
+const util = require('../../util/userUtil');
+const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
-const axios = require('axios');
-const qs = require('qs');
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 
@@ -38,15 +35,17 @@ router.post('/login', [
     );
   } else {
     // 매칭되는 비밀번호가 있다면 dbPassword에 값 넣어줌
-    dbPassword = password[0].userPassword;
+    dbPassword = password[0].Password;
     // 유저 입력 비밀번호, 가져온 비밀번호 비교 후 같으면 true 반환
     let loginCheck = await bcrypt.compare(userPassword, dbPassword);
     if (loginCheck === true) {
+      const nick = await db.loginNickname("EMAIL", userEmail);
       const token = await util.newToken("EMAIL", userEmail);
       res.send(
         {
           login: loginCheck,
-          token: token
+          token: token,
+          nickName: nick[0].nickName
         }
       );
     } else {
@@ -54,11 +53,7 @@ router.post('/login', [
         login: loginCheck
       })
     }
-
-
   }
-
-
 }))
 
 // 이메일 회원 가입
@@ -83,7 +78,6 @@ router.post('/join',
 
     // DB로 넘겨줄 값 정리
     let userInfor = {
-      profile: rb.userProfile,
       nickName: rb.userNickName,
       email: rb.userEmail,
       password: password,
@@ -95,9 +89,9 @@ router.post('/join',
     const f = await db.duplicateCheck(userInfor.loginMethod, userInfor.email);
     if (f.length === 0) {
       db.joinEmail(userInfor);
-      res.send("Join OK");
+      res.send("OK");
     } else {
-      res.send("중복 아이디");
+      res.send("article");
     }
 
   }));
@@ -124,22 +118,29 @@ router.post('/kakao', wrapper(async (req, res) => {
 
     // kakao 아이디 새로 만들기
     let f = await db.joinkakao(userData);
-
-    // kakao 아이디 만들다가 오류가 나면 회원가입 오류 반환 아니라면 로그인 토큰 생성
-    if(f === "ERR"){
+    console.log("아이디 만들기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+    console.log(f);
+    // kakao 아이디 만들다가 오류가 나면 회원가입 오류 반환
+    if (f === "ERR") {
       res.send("회원가입 오류");
-    }else{
+    }
+    // 트랜젝션 결과가 OK라면 토큰 발급 후 반환
+    if (f === "OK") {
+      const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
       const token = await util.newToken(userData.loginMethod, userData.loginID);
       res.send({
         login: true,
-        token: token
+        token: token,
+        nickName: nick[0].nickName
       });
     }
   } else {
+    const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
     const token = await util.newToken(userData.loginMethod, userData.loginID);
     res.send({
       login: true,
-      token: token
+      token: token,
+      nickName: nick[0].nickName
     });
   };
 
