@@ -42,14 +42,22 @@ router.get('/', wrapper(async function (req, res, next) {
 }));
 
 // 프로젝트 만들기
-router.post('/createProject', wrapper (async function (req, res) {
-    const rb = req.body;  
-
-    let f = await db.createProject(rb);
-    res.send(f);
-
-    // let f = db.createProject(req);
-    // res.send(f);
+router.post('/createProject', wrapper(async function (req, res) {
+    const {category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl} = req.body
+    // 토큰 가져오기
+    const toke = req.get('user_token');
+    // 토큰 가져온 후 검증 - 에러 코드 or 유저 판별 DIV 반환
+    const msg = await middle.verifyToken(toke);
+    // 에러 발생 시 res로 에러 반환
+    if (msg.code) {
+        console.log(msg.code + " : " + msg.massage);
+        return res.send({ err: msg.code + " : " + msg.massage });
+    }
+    // 카테고리 인덱스 찾아오기
+    const categoryindex = await db.findCateIndex(category, detailcategory);
+    console.log(categoryindex);
+    db.createProject(categoryindex[0].cateIndex, msg.userDIV, longTitle, shortTitle, summary, imgUrl,searchTag);
+    return res.send("ok");
 
 }));
 
