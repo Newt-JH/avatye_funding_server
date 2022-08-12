@@ -5,28 +5,7 @@ const anotherdb = require('../../DB/user/serMypageDB');
 const middle = require('../../middleware/userMiddleWare');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
-
-// 찜 목록 나타내는 부분 모듈화 처리
-const readHeart = wrapper(async function (req, res, query) {
-    // 토큰 가져오기
-    const toke = req.get('user_token');
-    if (toke !== undefined) {
-        // 토큰 가져온 후 검증 - 에러 코드 or 유저 판별 DIV 반환
-        const msg = await middle.verifyToken(toke);
-        // 에러 발생 시 res로 에러 반환
-        if (msg.code) {
-            console.log(msg.code + " : " + msg.massage);
-            return res.send({ err: msg.code + " : " + msg.massage });
-        } else {
-            // 유저 DIV 값으로 DB에서 정보 읽어오기
-            console.log(msg.userDIV);
-            query(msg.userDIV);
-        }
-    } else {
-        console.log("토큰 없음");
-        query(msg.userDIV);
-    }
-})
+const readToken = middle.readToken;
 
 /* 다른 유저 ID 조회 comment 반환 */
 router.get('/:id', wrapper(async function (req, res) {
@@ -54,7 +33,7 @@ router.get('/:id/upload', wrapper(async function (req, res) {
         return res.send(upLoadProject);
     }
 
-    readHeart(req, res, query);
+    readToken(req, res, query);
 }));
 
 /* 다른 유저 ID 조회 구매한 프로젝트 정보 반환 */
@@ -66,7 +45,7 @@ router.get('/:id/buy', wrapper(async function (req, res) {
         return res.send(buyProject);
     }
 
-    readHeart(req, res, query);
+    readToken(req, res, query);
 }));
 
 /* 다른 유저 ID 조회 올린 프로젝트 정보 반환 */

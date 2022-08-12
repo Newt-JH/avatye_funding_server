@@ -22,6 +22,26 @@ async function verifyToken(token){
     }
 }
 
+// 토큰 읽어와주는 부분 모듈화
+const readToken = wrapper(async function (req, res, query) {
+    // 토큰 가져오기
+    const toke = req.get('user_token');
+    if (toke !== undefined) {
+        // 토큰 가져온 후 검증 - 에러 코드 or 유저 판별 DIV 반환
+        const msg = await verifyToken(toke);
+        // 에러 발생 시 res로 에러 반환
+        if (msg.code) {
+            console.log(msg.code + " : " + msg.massage);
+            return res.send({ err: msg.code + " : " + msg.massage });
+        } else {
+            query(msg.userDIV);
+        }
+    } else {
+        query();
+    }
+})
+
 module.exports = {
     verifyToken,
+    readToken
 }
