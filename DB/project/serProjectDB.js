@@ -7,8 +7,8 @@ const trans = cons.tran;
 
 // 전체 프로젝트 불러오기
 function readProject(userDIV) {
-    const query = 
-    `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+    const query =
+        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
     profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
     from project p
     left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
@@ -23,7 +23,7 @@ function readProject(userDIV) {
 
 // 프로젝트 등록하기
 function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag) {
-    
+
     console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag);
     const query = `insert into 
     project(cateIndex,userID,longTitle,shortTitle,summary,profileIMG,searchTag)
@@ -34,7 +34,7 @@ function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, i
 // cateIndex 찾기
 function findCateIndex(category, detailcategory) {
     const query = `select cateIndex from category where name = '${category}' and detailName = '${detailcategory}';`
-return conpro(query);
+    return conpro(query);
 }
 
 

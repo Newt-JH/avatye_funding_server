@@ -18,7 +18,7 @@ router.get('/:id', wrapper(async function (req, res) {
 /* 다른 유저 ID 조회 프로필 사진, 닉네임, 가입 날짜 반환 */
 router.get('/:id/profile', wrapper(async function (req, res) {
     userDIV = req.params.id;
-    
+
     const userComment = await db.anotherProfile(userDIV);
     return res.send(userComment[0]);
 }
@@ -29,7 +29,7 @@ router.get('/:id/upload', wrapper(async function (req, res) {
     userDIV = req.params.id;
 
     const query = async function (myDIV) {
-        const upLoadProject = await db.anotherUploadProject(userDIV,myDIV);
+        const upLoadProject = await db.anotherUploadProject(userDIV, myDIV);
         return res.send(upLoadProject);
     }
 
@@ -41,7 +41,7 @@ router.get('/:id/buy', wrapper(async function (req, res) {
     userDIV = req.params.id;
 
     const query = async function (myDIV) {
-        const buyProject = await db.anotherBuyProject(userDIV,myDIV);
+        const buyProject = await db.anotherBuyProject(userDIV, myDIV);
         return res.send(buyProject);
     }
 

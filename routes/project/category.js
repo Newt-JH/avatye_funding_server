@@ -6,11 +6,11 @@ const wrapper = wrap.wrapper;
 
 
 // 메인 화면 주목할만한 프로젝트
-router.get('/', wrapper(async function(req, res) {
-    
+router.get('/', wrapper(async function (req, res) {
+
     let f = await db.readCategory();
     res.send(f);
-    
+
 }));
 
 module.exports = router;

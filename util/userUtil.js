@@ -4,8 +4,8 @@ const db = require('../DB/user/serUserDB');
 
 
 // 토큰 발급
-async function newToken(loginMethod,loginID){
-    const div = await db.readUserDIV(loginMethod,loginID);
+async function newToken(loginMethod, loginID) {
+    const div = await db.readUserDIV(loginMethod, loginID);
     console.log(div[0].userID);
     const tokenDiv = div[0].userID;
 

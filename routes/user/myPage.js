@@ -8,7 +8,7 @@ const readToken = middle.readToken;
 
 /* mypage 조회 comment 반환 */
 router.get('/', wrapper(async function (req, res) {
-    
+
     const query = async function (userDIV) {
         const userComment = await db.myPageComment(userDIV);
         return res.send(userComment[0]);

@@ -31,19 +31,19 @@ const readHeart = wrapper(async function (req, res, query) {
 
 // 전체 프로젝트 불러오기
 router.get('/', wrapper(async function (req, res, next) {
-    const query = async function(userDIV){
+    const query = async function (userDIV) {
         let f = await db.readProject(userDIV);
         res.send(f);
     }
 
-    readHeart(req,res,query);
+    readHeart(req, res, query);
 
 
 }));
 
 // 프로젝트 만들기
 router.post('/createProject', wrapper(async function (req, res) {
-    const {category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl} = req.body
+    const { category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl } = req.body
     // 토큰 가져오기
     const toke = req.get('user_token');
     // 토큰 가져온 후 검증 - 에러 코드 or 유저 판별 DIV 반환
@@ -56,42 +56,42 @@ router.post('/createProject', wrapper(async function (req, res) {
     // 카테고리 인덱스 찾아오기
     const categoryindex = await db.findCateIndex(category, detailcategory);
     console.log(categoryindex);
-    db.createProject(categoryindex[0].cateIndex, msg.userDIV, longTitle, shortTitle, summary, imgUrl,searchTag);
+    db.createProject(categoryindex[0].cateIndex, msg.userDIV, longTitle, shortTitle, summary, imgUrl, searchTag);
     return res.send("ok");
 
 }));
 
 // 인기 상품 불러오기
 router.get('/bestprojectlist', wrapper(async function (req, res) {
-    const query = async function(userDIV){
+    const query = async function (userDIV) {
         let f = await db.bestProjectList(userDIV);
         res.send(f);
     }
 
-    readHeart(req,res,query);
+    readHeart(req, res, query);
 
 }));
 
 // 신규 상품 불러오기
 router.get('/newprojectlist', wrapper(async function (req, res) {
-    const query = async function(userDIV){
+    const query = async function (userDIV) {
         let f = await db.newprojectlist(userDIV);
         res.send(f);
     }
 
-    readHeart(req,res,query);
+    readHeart(req, res, query);
 
 
 }));
 
 // 마감 임박 상품 불러오기
 router.get('/deadlineprojectlist', wrapper(async function (req, res) {
-    const query = async function(userDIV){
+    const query = async function (userDIV) {
         let f = await db.deadlineprojectlist(userDIV);
         res.send(f);
     }
 
-    readHeart(req,res,query);
+    readHeart(req, res, query);
 
 }));
 
