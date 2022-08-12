@@ -26,37 +26,39 @@ function anotherProfile(userDIV) {
     return conpro(query);
 }
 
-function anotherUploadProject(userDIV) {
+function anotherUploadProject(userDIV,myDIV) {
     const query =
-        `select 
-    projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID,
-    from project p
-    left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
-    on hc.projectIndex = project.projectIndex
-        join category c
-            on p.cateIndex = c.cateIndex
-        join user u
-            on u.userID = p.userID
-        join userProfile uP
-            on u.userID = uP.userID
-    where u.userID = "${userDIV}";
+        `select
+        p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID,hc.heartCheck
+        from project p
+        left join (select projectIndex,heartCheck from heart where userID = '${myDIV}') as hc
+        on hc.projectIndex = p.projectIndex
+            join category c
+                on p.cateIndex = c.cateIndex
+            join user u
+                on u.userID = p.userID
+            join userProfile uP
+                on u.userID = uP.userID
+        where u.userID = '${userDIV}';
     `
     return conpro(query);
 }
 
-function anotherBuyProject(userDIV) {
+function anotherBuyProject(userDIV,myDIV) {
     const query = `
-    select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID
+    select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID,hc.heartCheck
     from \`order\` o
         join project p
             on o.projectIndex = p.projectIndex
+        left join (select projectIndex,heartCheck from heart where userID = '${myDIV}') as hc
+            on hc.projectIndex = p.projectIndex
         join category c
             on p.cateIndex = c.cateIndex
         join user u
             on p.userID = u.userID
         join userProfile uP
             on u.userID = uP.userID
-    where o.userID = "${userDIV}"
+    where o.userID = '${userDIV}'
     group by o.projectIndex
     order by endDate desc;`
     return conpro(query);
