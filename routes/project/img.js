@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const wrap = require('./wrapper');
+const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 const multer = require('multer')
 const multerS3 = require('multer-s3')
@@ -9,7 +9,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyparser = require('body-parser');
 const app = express();
-aws.config.loadFromPath("/Users/newt/avatye_funding_server/s3.json");
+aws.config.loadFromPath("/Users/imjaehyeog/avatye-server/avatye_funding_server/s3.json");
 
 let corsOption = {
     origin : "*",

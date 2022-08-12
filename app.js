@@ -7,12 +7,17 @@ const cors = require('cors');
 
 
 var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
-var projectRouter = require('./routes/project');
-var mypageRouter = require('./routes/myPage');
-var anotherProfileRouter = require('./routes/anotherUserProfile');
+var userRouter = require('./routes/user/user');
+var projectRouter = require('./routes/project/project');
+var mypageRouter = require('./routes/user/myPage');
+var anotherProfileRouter = require('./routes/user/anotherUserProfile');
+var mainprojectRouter = require('./routes/project/main');
+var projectDetailRouter = require('./routes/project/detail');
+var heartRouter = require('./routes/project/heart');
+var followRouter = require('./routes/user/follow');
+var categoryRouter = require('./routes/project/category')
 //이미지 저장
-var imgRouter = require('./routes/img');
+var imgRouter = require('./routes/project/img');
 
 var app = express();
 
@@ -38,6 +43,11 @@ app.use('/user', userRouter);
 app.use('/project',projectRouter);
 app.use('/mypage', mypageRouter);
 app.use('/u', anotherProfileRouter);
+app.use('/main', mainprojectRouter);
+app.use('/projectdetail',projectDetailRouter);
+app.use('/heart',heartRouter);
+app.use('/follow',followRouter);
+app.use('/category',categoryRouter);
 //이미지
 app.use('/img', imgRouter);
 
