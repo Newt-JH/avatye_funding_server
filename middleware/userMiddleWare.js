@@ -4,7 +4,7 @@ const wrapper = wrap.wrapper;
 const secret = 'hwan'
 
 // 토큰 검증
-async function verifyToken(token){
+ async function verifyToken(token){
     try{
         decodeToken = jwt.verify(token,secret);
         return decodeToken;
@@ -22,7 +22,7 @@ async function verifyToken(token){
     }
 }
 
-// 토큰 읽어와주는 부분 모듈화
+// 토큰에서 유저 DIV 읽어와주는 부분 모듈화
 const readToken = wrapper(async function (req, res, query) {
     // 토큰 가져오기
     const toke = req.get('user_token');
