@@ -7,17 +7,17 @@ const wrapper = wrap.wrapper;
 
 /* 다른 유저 ID 조회 comment 반환 */
 router.get('/:id', wrapper(async function (req, res) {
-    userDIV = req.params.id;
-    const userComment = await db.anotherPage(userDIV);
+    userID = req.params.id;
+    const userComment = await db.anotherPage(userID);
     return res.send(userComment[0]);
 }
 ));
 
 /* 다른 유저 ID 조회 프로필 사진, 닉네임, 가입 날짜 반환 */
 router.get('/:id/profile', wrapper(async function (req, res) {
-    userDIV = req.params.id;
+    userID = req.params.id;
 
-    const userComment = await db.anotherProfile(userDIV);
+    const userComment = await db.anotherProfile(userID);
     return res.send(userComment[0]);
 }
 ));
@@ -44,16 +44,16 @@ router.get('/:id/buy', wrapper(async function (req, res) {
 
 /* 다른 유저 ID 조회 올린 프로젝트 정보 반환 */
 router.get('/:id/uploadcount', wrapper(async function (req, res) {
-    userDIV = req.params.id;
-    const upLoadProjectCount = await anotherdb.myUploadCount(userDIV);
+    userID = req.params.id;
+    const upLoadProjectCount = await anotherdb.myUploadCount(userID);
     return res.send(upLoadProjectCount[0]);
 }
 ));
 
 /* 다른 유저 ID 조회 구매한 프로젝트 정보 반환 */
 router.get('/:id/buycount', wrapper(async function (req, res) {
-    userDIV = req.params.id;
-    const buyProjectCount = await anotherdb.myBuyCount(userDIV);
+    userID = req.params.id;
+    const buyProjectCount = await anotherdb.myBuyCount(userID);
     return res.send(buyProjectCount[0]);
 }
 ));

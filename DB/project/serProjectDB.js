@@ -6,12 +6,12 @@ const con = cons.con;
 const trans = cons.tran;
 
 // 전체 프로젝트 불러오기
-function readProject(userDIV) {
+function readProject(userID) {
     const query =
         `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
     profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
     from project p
-    left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
+    left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
                 on hc.projectIndex = p.projectIndex
         join category c
             on p.cateIndex = c.cateIndex
@@ -40,57 +40,63 @@ function findCateIndex(category, detailcategory) {
 
 
 // 인기 프로젝트 순서로 불러오기
-function bestProjectList(userDIV) {
+function bestProjectList(userID) {
     const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
-        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
-        from project p
-        left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
-                    on hc.projectIndex = p.projectIndex
-            join category c
-                on p.cateIndex = c.cateIndex
-            join userProfile uP
-                on p.userID = uP.userID
-        where (p.nowPrice/p.goalPrice * 100) >= 100 and endDate > DATE_ADD(NOW(), INTERVAL 9 HOUR)
-        order by percent desc;`
+        `select percent,project.projectIndex,longTitle,summary,profileIMG,goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
+        (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+   profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
+   from project p
+       join category c
+           on p.cateIndex = c.cateIndex
+       join userProfile uP
+           on p.userID = uP.userID
+   where (p.nowPrice/p.goalPrice * 100) >= 100 and endDate > DATE_ADD(NOW(), INTERVAL 9 HOUR)
+   order by percent desc) as project
+   left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
+               on hc.projectIndex = project.projectIndex;`
     return conpro(query);
 }
 
 // 신규 프로젝트
 // 시작 날짜가 1주일 이내인 상품 노출
-function newprojectlist(userDIV) {
+function newprojectlist(userID) {
     const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
-        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
+        `select (project.nowPrice/project.goalPrice * 100) as percent,project.projectIndex, LongTitle,summary,
+        profileIMG, goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck
+    from (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
         from project p
-        left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
-                    on hc.projectIndex = p.projectIndex
             join category c
                 on p.cateIndex = c.cateIndex
             join userProfile uP
                 on p.userID = uP.userID
         where p.beginDate > DATE_ADD((DATE_SUB(NOW(), INTERVAL 7 DAY)),INTERVAL 9 HOUR)
         and p.beginDate < DATE_ADD(NOW(),INTERVAL 9 HOUR)
-        order by beginDate;`
+        order by beginDate) as project
+            left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
+                on hc.projectIndex = project.projectIndex;`
     return conpro(query);
 }
 
 // 마감 임박 프로젝트
 // 마감 날짜가 1주일 이내인 상품 노출
-function deadlineprojectlist(userDIV) {
+function deadlineprojectlist(userID) {
     const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
-        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
+        `select percent,project.projectIndex, LongTitle,summary,
+        profileIMG, goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
+             (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
         from project p
-        left join (select projectIndex,heartCheck from heart where userID = '${userDIV}') as hc
-                    on hc.projectIndex = p.projectIndex
             join category c
                 on p.cateIndex = c.cateIndex
             join userProfile uP
                 on p.userID = uP.userID
         where date_sub(p.endDate,INTERVAL 7 DAY) < DATE_ADD(NOW(),INTERVAL 9 HOUR)
         and p.endDate > DATE_ADD(NOW(),INTERVAL 9 HOUR)
-        order by endDate;`
+        order by endDate) as project
+            left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
+                    on hc.projectIndex = project.projectIndex;
+`
     return conpro(query);
 }
 

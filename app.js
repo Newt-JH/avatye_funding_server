@@ -40,7 +40,7 @@ const readToken = wrapper( async (req,res,next) => {
         req.err = msg.code + " : " + msg.massage;
         next();
     } else {
-        req.userID = msg.userDIV;
+        req.userID = msg.userID;
         next();
     }
 } else {
