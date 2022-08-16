@@ -17,8 +17,15 @@ router.get('/:id', wrapper(async function (req, res) {
 router.get('/:id/profile', wrapper(async function (req, res) {
     userID = req.params.id;
 
-    const userComment = await db.anotherProfile(userID);
-    return res.send(userComment[0]);
+    const userProfile = await db.anotherProfile(userID);
+    const upLoadCount = await anotherdb.myUploadCount(userID);
+    const buyCount = await anotherdb.myBuyCount(userID);
+    const resData = {
+        userProfile : userProfile[0],
+        upLoadCount : upLoadCount[0],
+        buyCount    : buyCount[0]
+    }
+    return res.send(resData);
 }
 ));
 
@@ -41,21 +48,5 @@ router.get('/:id/buy', wrapper(async function (req, res) {
     return res.send(buyProject);
 
 }));
-
-/* 다른 유저 ID 조회 올린 프로젝트 정보 반환 */
-router.get('/:id/uploadcount', wrapper(async function (req, res) {
-    userID = req.params.id;
-    const upLoadProjectCount = await anotherdb.myUploadCount(userID);
-    return res.send(upLoadProjectCount[0]);
-}
-));
-
-/* 다른 유저 ID 조회 구매한 프로젝트 정보 반환 */
-router.get('/:id/buycount', wrapper(async function (req, res) {
-    userID = req.params.id;
-    const buyProjectCount = await anotherdb.myBuyCount(userID);
-    return res.send(buyProjectCount[0]);
-}
-));
 
 module.exports = router;

@@ -20,13 +20,15 @@ router.get('/profile', wrapper(async function (req, res) {
     const userProfile = await db.myProfile(userID);
     const upLoadCount = await db.myUploadCount(userID);
     const buyCount = await db.myBuyCount(userID);
-    return res.send(
-        {
-            userProfile : userProfile[0],
-            upLoadCount : upLoadCount[0],
-            buyCount    : buyCount[0]
-        }
-        );
+    // comment > 글 등록 시 창작자 소개 사용
+    const userComment = await db.myPageComment(userID);
+    const resData = {
+        userProfile : userProfile[0],
+        upLoadCount : upLoadCount[0],
+        buyCount    : buyCount[0],
+        userComment : userComment[0]
+    }
+    return res.send(resData);
 
 }));
 
