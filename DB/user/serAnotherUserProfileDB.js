@@ -26,7 +26,7 @@ function anotherProfile(userID) {
     return conpro(query);
 }
 
-function anotherUploadProject(userID,myID) {
+function anotherUploadProject(userID, myID) {
     const query =
         `select 
             project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
@@ -46,7 +46,7 @@ function anotherUploadProject(userID,myID) {
     return conpro(query);
 }
 
-function anotherBuyProject(userID,myID) {
+function anotherBuyProject(userID, myID) {
     const query = `
     select project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
         (select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID

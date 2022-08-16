@@ -23,10 +23,10 @@ router.get('/profile', wrapper(async function (req, res) {
     // comment > 글 등록 시 창작자 소개 사용
     const userComment = await db.myPageComment(userID);
     const resData = {
-        userProfile : userProfile[0],
-        upLoadCount : upLoadCount[0],
-        buyCount    : buyCount[0],
-        userComment : userComment[0]
+        userProfile: userProfile[0],
+        upLoadCount: upLoadCount[0],
+        buyCount: buyCount[0],
+        userComment: userComment[0]
     }
     return res.send(resData);
 

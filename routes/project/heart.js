@@ -8,19 +8,18 @@ const wrapper = wrap.wrapper;
 router.get('/add/:id', wrapper(async function (req, res) {
     const proIndex = req.params.id;
     const userID = req.userID;
-    
-        let f = await db.heart(userID, proIndex);
-        return res.send(f[0][0]);
+
+    let f = await db.heart(userID, proIndex);
+    return res.send(f[0][0]);
 
 }));
 
 // 찜 목록
 router.get('/list', wrapper(async function (req, res) {
-    const proIndex = req.params.id;
     const userID = req.userID;
-    
-        let f = await db.heartList(userID);
-        return res.send(f);
+
+    let f = await db.heartList(userID);
+    return res.send(f);
 }));
 
 module.exports = router;

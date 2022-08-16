@@ -9,8 +9,8 @@ const wrapper = wrap.wrapper;
 router.get('/pointproject', wrapper(async function (req, res) {
     const userID = req.userID;
 
-            let f = await db.mdProject(userID);
-            return res.send(f);
+    let f = await db.mdProject(userID);
+    return res.send(f);
 
 }));
 
