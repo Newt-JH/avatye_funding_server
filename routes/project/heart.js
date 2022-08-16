@@ -16,7 +16,6 @@ router.get('/add/:id', wrapper(async function (req, res) {
 
 // 찜 목록
 router.get('/list', wrapper(async function (req, res) {
-    const proIndex = req.params.id;
     const userID = req.userID;
     
         let f = await db.heartList(userID);
