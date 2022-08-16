@@ -20,13 +20,12 @@ router.get('/profile', wrapper(async function (req, res) {
     const userProfile = await db.myProfile(userID);
     const upLoadCount = await db.myUploadCount(userID);
     const buyCount = await db.myBuyCount(userID);
-    return res.send(
-        {
-            userProfile : userProfile[0],
-            upLoadCount : upLoadCount[0],
-            buyCount    : buyCount[0]
-        }
-        );
+    const resData = {
+        userProfile : userProfile[0],
+        upLoadCount : upLoadCount[0],
+        buyCount    : buyCount[0]
+    }
+    return res.send(resData);
 
 }));
 
