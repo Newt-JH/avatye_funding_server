@@ -17,8 +17,16 @@ router.get('/', wrapper(async function (req, res) {
 router.get('/profile', wrapper(async function (req, res) {
     const userID = req.userID;
 
-    const userComment = await db.myProfile(userID);
-    return res.send(userComment[0]);
+    const userProfile = await db.myProfile(userID);
+    const upLoadCount = await db.myUploadCount(userID);
+    const buyCount = await db.myBuyCount(userID);
+    return res.send(
+        {
+            userProfile : userProfile[0],
+            upLoadCount : upLoadCount[0],
+            buyCount    : buyCount[0]
+        }
+        );
 
 }));
 
@@ -31,30 +39,12 @@ router.get('/upload', wrapper(async function (req, res) {
 
 }));
 
-/* mypage 조회 올린 프로젝트 수 반환 */
-router.get('/uploadcount', wrapper(async function (req, res) {
-    const userID = req.userID;
-
-    const upLoadCount = await db.myUploadCount(userID);
-    return res.send(upLoadCount[0]);
-
-}));
-
 /* mypage 조회 구매한 프로젝트 정보 반환 */
 router.get('/buy', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const buyProject = await db.myBuyProject(userID);
     return res.send(buyProject);
-
-}));
-
-/* mypage 구매한 프로젝트 수 반환 */
-router.get('/buycount', wrapper(async function (req, res) {
-    const userID = req.userID;
-
-    const upLoadCount = await db.myBuyCount(userID);
-    return res.send(upLoadCount[0]);
 
 }));
 
