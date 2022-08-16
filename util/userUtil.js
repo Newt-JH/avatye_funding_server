@@ -11,7 +11,7 @@ async function newToken(loginMethod, loginID) {
 
     token = jwt.sign({
         type: 'JWT',
-        userDIV: tokenDiv
+        userID: tokenDiv
     }, secret, {
         expiresIn: '15m', // 만료시간 15분
         issuer: tokenDiv

@@ -11,56 +11,60 @@ const conpro = cons.conpro;
 const con = cons.con;
 const tran = cons.tran;
 
-function anotherPage(userDIV) {
-    const query = `select Comment from userProfile where userID ="${userDIV}";`
+function anotherPage(userID) {
+    const query = `select comment from userProfile where userID ="${userID}";`
     return conpro(query);
 }
 
-function anotherProfile(userDIV) {
+function anotherProfile(userID) {
     const query =
         `select profileImage,nickName,Date 
     from userProfile
         join user u 
             on userProfile.userID = u.userID
-    where u.userID = "${userDIV}";`
+    where u.userID = "${userID}";`
     return conpro(query);
 }
 
-function anotherUploadProject(userDIV,myDIV) {
+function anotherUploadProject(userID,myID) {
     const query =
-        `select
-        p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID,hc.heartCheck
-        from project p
-        left join (select projectIndex,heartCheck from heart where userID = '${myDIV}') as hc
-        on hc.projectIndex = p.projectIndex
-            join category c
-                on p.cateIndex = c.cateIndex
-            join user u
-                on u.userID = p.userID
-            join userProfile uP
-                on u.userID = uP.userID
-        where u.userID = '${userDIV}';
+        `select 
+            project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
+        (select
+                p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID
+                from project p
+                    join category c
+                        on p.cateIndex = c.cateIndex
+                    join user u
+                        on u.userID = p.userID
+                    join userProfile uP
+                        on u.userID = uP.userID
+                where u.userID = '${userID}') as project
+                left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
+                on hc.projectIndex = project.projectIndex;;
     `
     return conpro(query);
 }
 
-function anotherBuyProject(userDIV,myDIV) {
+function anotherBuyProject(userID,myID) {
     const query = `
-    select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID,hc.heartCheck
+    select project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
+        (select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID
     from \`order\` o
         join project p
             on o.projectIndex = p.projectIndex
-        left join (select projectIndex,heartCheck from heart where userID = '${myDIV}') as hc
-            on hc.projectIndex = p.projectIndex
+
         join category c
             on p.cateIndex = c.cateIndex
         join user u
             on p.userID = u.userID
         join userProfile uP
             on u.userID = uP.userID
-    where o.userID = '${userDIV}'
+    where o.userID = '${userID}'
     group by o.projectIndex
-    order by endDate desc;`
+    order by endDate desc) as project
+        left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
+            on hc.projectIndex = project.projectIndex;`
     return conpro(query);
 }
 
