@@ -16,7 +16,7 @@ function heart(userID, proIndex) {
 // 찜 목록
 function heartList(userID) {
     const query =
-        `select p.projectIndex,profileIMG,c.name,uP.nickName,longTitle,summary,goalPrice,nowPrice,beginDate,endDate,ingProject.progress
+        `select p.projectIndex,profileIMG,c.name,uP.nickName,longTitle,summary,goalPrice,nowPrice,beginDate,endDate,projectProgress.progress
         from heart h
             join project p
                 on h.projectIndex = p.projectIndex
@@ -32,10 +32,9 @@ function heartList(userID) {
                         select projectIndex,'end' as progress
                             from project
                         where DATE_ADD(NOW(),INTERVAL 9 HOUR) > endDate)
-                          ) as ingProject
-                on ingProject.projectIndex = p.projectIndex
-    where DATE_ADD(NOW(),INTERVAL 9 HOUR) > p.beginDate and h.userID = '${userID}' and heartCheck = 1
-    group by p.projectIndex;`
+                          ) as projectProgress
+                on projectProgress.projectIndex = p.projectIndex
+    where DATE_ADD(NOW(),INTERVAL 9 HOUR) > p.beginDate and h.userID = '${userID}' and heartCheck = 1;`
 
     return conpro(query);
 }
