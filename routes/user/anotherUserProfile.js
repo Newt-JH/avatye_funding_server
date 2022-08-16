@@ -2,10 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../../DB/user/serAnotherUserProfileDB');
 const anotherdb = require('../../DB/user/serMypageDB');
-const middle = require('../../middleware/userMiddleWare');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
-const readToken = middle.readToken;
 
 /* 다른 유저 ID 조회 comment 반환 */
 router.get('/:id', wrapper(async function (req, res) {
@@ -26,26 +24,22 @@ router.get('/:id/profile', wrapper(async function (req, res) {
 
 /* 다른 유저 ID 조회 올린 프로젝트 정보 반환 */
 router.get('/:id/upload', wrapper(async function (req, res) {
-    userDIV = req.params.id;
+    const userID = req.params.id;
+    const myID = req.userID;
 
-    const query = async function (myDIV) {
-        const upLoadProject = await db.anotherUploadProject(userDIV, myDIV);
-        return res.send(upLoadProject);
-    }
+    const upLoadProject = await db.anotherUploadProject(userID, myID);
+    return res.send(upLoadProject);
 
-    readToken(req, res, query);
 }));
 
 /* 다른 유저 ID 조회 구매한 프로젝트 정보 반환 */
 router.get('/:id/buy', wrapper(async function (req, res) {
-    userDIV = req.params.id;
+    const userID = req.params.id;
+    const myID = req.userID;
 
-    const query = async function (myDIV) {
-        const buyProject = await db.anotherBuyProject(userDIV, myDIV);
-        return res.send(buyProject);
-    }
+    const buyProject = await db.anotherBuyProject(userID, myID);
+    return res.send(buyProject);
 
-    readToken(req, res, query);
 }));
 
 /* 다른 유저 ID 조회 올린 프로젝트 정보 반환 */

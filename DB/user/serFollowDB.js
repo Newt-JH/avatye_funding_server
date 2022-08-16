@@ -22,7 +22,7 @@ function followerList(userID) {
 
 // 팔로우 한 리스트
 function followingList(userID) {
-    const query = `select following from follow where followed = '${userID}' and followingCheck = 1;`
+    const query = `select followed from follow where following = '${userID}' and followingCheck = 1;`
 
     return conpro(query);
 }
