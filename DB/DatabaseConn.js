@@ -16,7 +16,7 @@ function conpro(query) {
             if (err) {
                 rej("Error");
             } else {
-                console.log(rows);
+                //console.log(rows);
                 res(rows);
             }
         })
