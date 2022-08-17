@@ -29,7 +29,7 @@ function heartList(userID) {
         beginDate,
         endDate,
         heartCheck,
-        IF((p.beginDate < date_format(now(), '%Y-%m-%d') and
+        IF((p.beginDate <= date_format(now(), '%Y-%m-%d') and
             p.endDate > date_format(now(), '%Y-%m-%d')), 'ing', 'end') as progress
  from heart h
           join project p
