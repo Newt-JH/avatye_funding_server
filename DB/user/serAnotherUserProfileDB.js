@@ -29,9 +29,9 @@ function anotherProfile(userID) {
 function anotherUploadProject(userID, myID) {
     const query =
         `select 
-            project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
+            project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
         (select
-                p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID
+                p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
                 from project p
                     join category c
                         on p.cateIndex = c.cateIndex
@@ -48,8 +48,8 @@ function anotherUploadProject(userID, myID) {
 
 function anotherBuyProject(userID, myID) {
     const query = `
-    select project.projectIndex,profileIMG,name,nickName,LongTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
-        (select  p.projectIndex,profileIMG,c.name,uP.nickName,p.LongTitle,summary,goalPrice,nowPrice,endDate,uP.userID
+    select project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
+        (select  p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
     from \`order\` o
         join project p
             on o.projectIndex = p.projectIndex
