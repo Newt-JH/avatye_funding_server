@@ -17,7 +17,7 @@ function heart(userID, proIndex) {
 function heartList(userID) {
     const query =
         `select 
-        p.nowPrice/p.goalPrice * 100) as percent,
+        (p.nowPrice/p.goalPrice * 100) as percent,
         p.projectIndex,
         profileIMG,
         c.name,
