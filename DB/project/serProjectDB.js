@@ -140,11 +140,9 @@ function searchKeyword(keyword,userID) {
             (nowPrice / p.goalPrice * 100) as percent,p.*,c.name,uP.nickName,
             IF((p.beginDate <= date_format(now(), '%Y-%m-%d') and
                     p.endDate > date_format(now(), '%Y-%m-%d')), 'ing', 'end') as progress
-                                          
             from project p
             join category c on p.cateIndex = c.cateIndex
             join userProfile uP on p.userID = uP.userID
-        
         where searchTag like '%${keyword}%') as project
             left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
                 on hc.projectIndex = project.projectIndex;`
