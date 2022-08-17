@@ -10,7 +10,7 @@ const trans = cons.tran;
 function mdProject(userID) {
     const query =
         `select percent,project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,name,project.userID,hc.heartCheck
-        from (select (p.nowPrice/p.goalPrice * 100) as percent,
+        from (select (project.nowPrice/project.goalPrice * 100) as percent,
                 project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,c.name,uP.userID
                 from project
                     join userProfile uP
