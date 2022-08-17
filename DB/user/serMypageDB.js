@@ -28,8 +28,8 @@ function myProfile(userID) {
 function myUploadProject(userID) {
     const query =
         `
-        select project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
-             (select  p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
+        select percent,project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
+             (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
         from project p
             join category c
                 on p.cateIndex = c.cateIndex
@@ -52,8 +52,8 @@ function myUploadCount(userID) {
 
 function myBuyProject(userID) {
     const query = `
-    select project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
-       (select  p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
+    select percent,project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
+       (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
     from \`order\` o
         join project p
             on o.projectIndex = p.projectIndex

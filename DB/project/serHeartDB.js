@@ -16,7 +16,9 @@ function heart(userID, proIndex) {
 // 찜 목록
 function heartList(userID) {
     const query =
-        `select p.projectIndex,
+        `select 
+        p.nowPrice/p.goalPrice * 100) as percent,
+        p.projectIndex,
         profileIMG,
         c.name,
         uP.nickName,

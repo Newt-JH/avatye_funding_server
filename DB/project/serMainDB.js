@@ -9,8 +9,8 @@ const trans = cons.tran;
 // 일단 목표 금액이 가장 높은 프로젝트 표시
 function mdProject(userID) {
     const query =
-        `select project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,name,project.userID,hc.heartCheck
-        from (select
+        `select percent,project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,name,project.userID,hc.heartCheck
+        from (select (p.nowPrice/p.goalPrice * 100) as percent,
                 project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,c.name,uP.userID
                 from project
                     join userProfile uP
