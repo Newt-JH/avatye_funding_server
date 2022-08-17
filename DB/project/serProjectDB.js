@@ -8,7 +8,7 @@ const trans = cons.tran;
 // 전체 프로젝트 불러오기
 function readProject(userID) {
     const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
     profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,hc.heartCheck
     from project p
     left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
@@ -43,7 +43,7 @@ function findCateIndex(category, detailcategory) {
 function bestProjectList(userID) {
     const query =
         `select percent,project.projectIndex,longTitle,summary,profileIMG,goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
-        (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+        (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
    profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
    from project p
        join category c
@@ -61,9 +61,9 @@ function bestProjectList(userID) {
 // 시작 날짜가 1주일 이내인 상품 노출
 function newprojectlist(userID) {
     const query =
-        `select (project.nowPrice/project.goalPrice * 100) as percent,project.projectIndex, LongTitle,summary,
+        `select (project.nowPrice/project.goalPrice * 100) as percent,project.projectIndex, longTitle,summary,
         profileIMG, goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck
-    from (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+    from (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
         profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
         from project p
             join category c
@@ -82,9 +82,9 @@ function newprojectlist(userID) {
 // 마감 날짜가 1주일 이내인 상품 노출
 function deadlineprojectlist(userID) {
     const query =
-        `select percent,project.projectIndex, LongTitle,summary,
+        `select percent,project.projectIndex, longTitle,summary,
         profileIMG, goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
-             (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, LongTitle,summary,
+             (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
         profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
         from project p
             join category c
@@ -103,7 +103,7 @@ function deadlineprojectlist(userID) {
 // 공개 예정 프로젝트
 function tobeprojectlist() {
     const query =
-        `select projectIndex, LongTitle,summary,
+        `select projectIndex, longTitle,summary,
         profileIMG, nickName,c.name,uP.userID
         from project p
             join category c
