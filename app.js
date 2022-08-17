@@ -67,7 +67,8 @@ var mainprojectRouter = require('./routes/project/main');
 var projectDetailRouter = require('./routes/project/detail');
 var heartRouter = require('./routes/project/heart');
 var followRouter = require('./routes/user/follow');
-var categoryRouter = require('./routes/project/category')
+var categoryRouter = require('./routes/project/category');
+var searchRouter = require('./routes/project/search');
 //이미지 저장
 var imgRouter = require('./routes/project/img');
 
@@ -102,6 +103,7 @@ app.use('/projectdetail',projectDetailRouter);
 app.use('/heart',heartRouter);
 app.use('/follow',followRouter);
 app.use('/category',categoryRouter);
+app.use('/search',searchRouter);
 //이미지
 app.use('/img', imgRouter);
 
