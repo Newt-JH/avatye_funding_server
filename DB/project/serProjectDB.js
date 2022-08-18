@@ -1,3 +1,5 @@
+
+const moment = require('moment');
 const cons = require('../DatabaseConn');
 // pro > DB 읽어올때 쓰는 모듈 ( 프로미스 반환 / async await 사용하기 위해 사용 )
 // tto > row에 대해 읽어올 필요가 없는 쿼리 날릴때 사용
@@ -22,10 +24,11 @@ function readProject(userID) {
 }
 
 // 프로젝트 등록하기
-function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag) {
-
-    console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag);
-    const query = `call createProject ('${categoryindex}','${userDIV}','${longTitle}','${shortTitle}','${summary}','${imgUrl}','${searchTag}')`
+function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag, contents, startDate, endDate, goalprice) {
+    const beginDate = moment(startDate).format('YYYY-MM-DD');
+    const theEndDate = moment(endDate).format('YYYY-MM-DD');
+    console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag, contents, beginDate, theEndDate, goalprice);
+    const query = `call createProject ('${categoryindex}','${userDIV}','${longTitle}','${shortTitle}','${summary}','${imgUrl}','${searchTag}', '${contents}' ,'${beginDate}', '${theEndDate}', '${goalprice}');`
     return conpro(query);
 }
 
@@ -35,6 +38,16 @@ function findCateIndex(category, detailcategory) {
     return conpro(query);
 }
 
+// 선물 등록
+function createGift(giftCount, giftDeliveryDate, giftDetail, giftPrice, giftStock, giftTitle, projectId) {
+    const giftDate = moment(giftDeliveryDate).format('YYYY-MM-DD');
+
+    const query = `insert into 
+    projectGift(gitfTitle, giftDetail, projectIndex, giftPrice, giftCount, giftStock, giftDeliveryDate) 
+    value ('${giftTitle}', '${giftDetail}', '${projectId}','${giftPrice}',' ${giftCount}','${giftStock}','${giftDate}')`
+
+    return con(query);
+}
 
 
 
@@ -157,5 +170,6 @@ module.exports = {
     tobeprojectlist,
     findCateIndex,
     searchTitleSummary,
-    searchKeyword
+    searchKeyword,
+    createGift
 } 
