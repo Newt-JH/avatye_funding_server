@@ -161,6 +161,13 @@ function searchKeyword(keyword,userID) {
     return conpro(query);
 }
 
+// 프로젝트 글쓴이의 ID 읽어오기
+function readWriterID(projectIndex){
+    const query = `select userID from project where projectIndex = '${projectIndex}';`
+
+    return conpro(query);
+}
+
 module.exports = {
     readProject,
     createProject,
@@ -171,5 +178,6 @@ module.exports = {
     findCateIndex,
     searchTitleSummary,
     searchKeyword,
-    createGift
+    createGift,
+    readWriterID
 } 

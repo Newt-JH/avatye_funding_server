@@ -5,7 +5,7 @@ const conpro = cons.conpro;
 const con = cons.con;
 const trans = cons.tran;
 
-// 전체 카테고리 불러오기
+// 전체 리뷰 or 업데이트 불러오기
 function readReview(which,proIndex) {
     const query =
         `select review.*,nickName
@@ -16,7 +16,7 @@ function readReview(which,proIndex) {
     return conpro(query);
 }
 
-// 카테고리 등록
+// 리뷰 or 업데이트 등록
 function uploadReview(proIndex,userID,comment,which) {
     const query =
         `insert 
