@@ -88,9 +88,9 @@ function myBuyCount(userID) {
 function myInfor(userID) {
     const query =
         `select userProfile.*,website,email,pay.*,s.* from userProfile
-        join user u on userProfile.userID = u.userID
-        join payment pay on userProfile.userID = pay.userID
-        join shipping s on userProfile.userID = s.userID
+        left join user u on userProfile.userID = u.userID
+        left join payment pay on userProfile.userID = pay.userID
+        left join shipping s on userProfile.userID = s.userID
     where userProfile.userID = '${userID}';`
     return conpro(query);
 }
