@@ -7,10 +7,6 @@ const wrapper = wrap.wrapper;
 const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 
-/* 유저 조회 */ // 토큰 가져온거 테스트 중
-router.get('/', wrapper(async function (req, res, next) {
-}));
-
 // 이메일 로그인
 router.post('/login', [
   body('userEmail').isEmail(),
@@ -144,6 +140,26 @@ router.post('/kakao', wrapper(async (req, res) => {
     });
   };
 
+}));
+
+// 유저 정보 수정
+router.put('/update/which=:which&key=:key', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const which = req.params.which;
+  const key = req.params.key;
+  let password = "";
+
+  if (which === "Password") {
+    // 비밀번호 암호화 하기
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(key, salt);
+
+    const f = await db.userChange(which, password, userID);
+    res.send(f);
+  } else {
+    const f = await db.userChange(which, key, userID);
+    res.send(f);
+  }
 }));
 
 

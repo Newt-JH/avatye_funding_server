@@ -73,6 +73,12 @@ function duplicateCheck(method, id) {
     return conpro(query);
 };
 
+// 정보 수정
+function userChange(which,key,userID) {
+    const query = `call user${which}Change('${key}','${userID}');`
+    return conpro(query);
+}
+
 module.exports = {
     readUser,
     joinkakao,
@@ -80,5 +86,6 @@ module.exports = {
     duplicateCheck,
     loginEmail,
     readUserDIV,
-    loginNickname
+    loginNickname,
+    userChange
 }

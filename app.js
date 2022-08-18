@@ -91,7 +91,7 @@ let corsOptions = {
 }
 
 app.use(readToken);
-app.use(['/mypage','/heart','/follow','/project/createProject'],errReturn);
+app.use(['/mypage','/heart','/follow','/project/createProject','/user/update'],errReturn);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
