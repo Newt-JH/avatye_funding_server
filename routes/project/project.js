@@ -15,15 +15,22 @@ router.get('/', wrapper(async function (req, res, next) {
 
 // 프로젝트 만들기
 router.post('/createProject', wrapper(async function (req, res) {
-    const { category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl } = req.body
+    const { category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl, contents, giftData, endDate, startDate, goalprice } = req.body
     // 토큰 가져오기
     const userID = req.userID;
     // 카테고리 인덱스 찾아오기
     const categoryindex = await db.findCateIndex(category, detailcategory);
     console.log(categoryindex);
-    const f = await db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag);
-
-    return res.send(f);
+    const f = await db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag, contents, startDate, endDate, goalprice);
+    console.log(f[0][0].proIndex)
+    const projectId = f[0][0].proIndex;
+    // 선물 등록
+    if (giftData[0].giftTitle !== '') {
+        giftData.map((item) => {
+        console.log(item)
+        return db.createGift(item.giftCount, item.giftDeliveryDate, item.giftDetail, item.giftPrice, item.giftStock, item.giftTitle, projectId)
+    })
+    }
 
 }));
 
