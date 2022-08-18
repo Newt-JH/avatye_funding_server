@@ -27,7 +27,8 @@ function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, i
     console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag);
     const query = `insert into 
     project(cateIndex,userID,longTitle,shortTitle,summary,profileIMG,searchTag)
-    values ('${categoryindex}', '${userDIV}', '${longTitle}', '${shortTitle}', '${summary}', '${imgUrl}', '${searchTag}')`
+    values ('${categoryindex}', '${userDIV}', '${longTitle}', '${shortTitle}', '${summary}', '${imgUrl}', '${searchTag}');`
+
     return con(query);
 }
 
@@ -36,6 +37,7 @@ function findCateIndex(category, detailcategory) {
     const query = `select cateIndex from category where name = '${category}' and detailName = '${detailcategory}';`
     return conpro(query);
 }
+
 
 
 

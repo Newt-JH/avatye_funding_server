@@ -9,7 +9,7 @@ const path = require('path');
 const cors = require('cors');
 const bodyparser = require('body-parser');
 const app = express();
-aws.config.loadFromPath("/Users/newt/avatye_funding_server/s3.json");
+aws.config.loadFromPath('/Users/imjaehyeog/avatye-server/avatye_funding_server/s3.json');
 
 let corsOption = {
     origin: "*",
@@ -32,6 +32,7 @@ const upload = multer({
 });
 
 router.post('/', upload.single('img'), async (req, res) => {
+    console.log("dd");
     const image = req.file.location
 
     if (image === undefined) {
