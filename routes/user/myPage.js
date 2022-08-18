@@ -50,4 +50,13 @@ router.get('/buy', wrapper(async function (req, res) {
 
 }));
 
+/* mypage 정보 수정 시 유저 정보 반환하는 탭 */
+router.get('/userInfor', wrapper(async function (req, res) {
+    const userID = req.userID;
+
+    const userInfor = await db.myInfor(userID);
+    return res.send(userInfor);
+
+}));
+
 module.exports = router;

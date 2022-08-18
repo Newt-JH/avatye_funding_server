@@ -69,6 +69,7 @@ var heartRouter = require('./routes/project/heart');
 var followRouter = require('./routes/user/follow');
 var categoryRouter = require('./routes/project/category');
 var searchRouter = require('./routes/project/search');
+var reviewRouter = require('./routes/project/review');
 //이미지 저장
 var imgRouter = require('./routes/project/img');
 
@@ -91,7 +92,7 @@ let corsOptions = {
 }
 
 app.use(readToken);
-app.use(['/mypage','/heart','/follow','/project/createProject','/user/update'],errReturn);
+app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/upload'],errReturn);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
@@ -104,6 +105,7 @@ app.use('/heart',heartRouter);
 app.use('/follow',followRouter);
 app.use('/category',categoryRouter);
 app.use('/search',searchRouter);
+app.use('/review',reviewRouter);
 //이미지
 app.use('/img', imgRouter);
 
