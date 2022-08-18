@@ -25,10 +25,8 @@ function readProject(userID) {
 function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag) {
 
     console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag);
-    const query = `insert into 
-    project(cateIndex,userID,longTitle,shortTitle,summary,profileIMG,searchTag)
-    values ('${categoryindex}', '${userDIV}', '${longTitle}', '${shortTitle}', '${summary}', '${imgUrl}', '${searchTag}')`
-    return con(query);
+    const query = `call createProject ('${categoryindex}','${userDIV}','${longTitle}','${shortTitle}','${summary}','${imgUrl}','${searchTag}')`
+    return conpro(query);
 }
 
 // cateIndex 찾기

@@ -21,9 +21,9 @@ router.post('/createProject', wrapper(async function (req, res) {
     // 카테고리 인덱스 찾아오기
     const categoryindex = await db.findCateIndex(category, detailcategory);
     console.log(categoryindex);
-    db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag);
+    const f = await db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag);
 
-    return res.send("ok");
+    return res.send(f);
 
 }));
 
