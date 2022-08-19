@@ -6,9 +6,38 @@ const con = cons.con;
 const trans = cons.tran;
 
 // 전체 카테고리 불러오기
-function readCategory(req) {
+function readCategory(userID) {
     const query =
-        `select name,group_concat(detailName) as catename from category group by name;`
+        `select percent,project.projectIndex,longTitle,summary,profileIMG,goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
+        (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
+   profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
+   from project p
+       join category c
+           on p.cateIndex = c.cateIndex
+       join userProfile uP
+           on p.userID = uP.userID
+   order by percent desc) as project
+   left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
+               on hc.projectIndex = project.projectIndex;`
+
+    return conpro(query);
+}
+
+// 카테고리별 상품 불러오기
+function oneCategory(cateName, userID) {
+    const query = `
+    select percent,project.projectIndex,longTitle,summary,profileIMG,goalPrice,nowPrice,endDate,nickName,name,userID,hc.heartCheck from
+        (select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
+   profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID
+   from project p
+       join category c
+           on p.cateIndex = c.cateIndex
+       join userProfile uP
+           on p.userID = uP.userID
+   where c.name = '${cateName}'
+   order by percent desc) as project
+   left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
+               on hc.projectIndex = project.projectIndex;`
 
     return conpro(query);
 }
@@ -16,5 +45,6 @@ function readCategory(req) {
 
 
 module.exports = {
-    readCategory
+    readCategory,
+    oneCategory
 } 
