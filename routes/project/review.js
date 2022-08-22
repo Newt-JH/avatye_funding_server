@@ -39,7 +39,7 @@ router.post('/uploadUpdate', wrapper(async function (req, res) {
 
     // 댓글 DIV가 update가 아니라면 오류 반환
     if(which !== "update"){
-        return res.send({ err: "431 : Community와 Review는 다른 탭을 이용해주세요." })
+        return res.status(431).send({ err: "431 : Community와 Review는 다른 탭을 이용해주세요." })
     }
     // project의 작성자 ID 불러오기
     const f = await db2.readWriterID(projectID);
