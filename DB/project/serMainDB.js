@@ -16,9 +16,9 @@ function mdProject(userID) {
                 on project.userID = uP.userID
             join category c
                 on project.cateIndex = c.cateIndex
-        where endDate > now()
+        where endDate > date_format(now(), '%Y-%m-%d') and beginDate < date_format(now(), '%Y-%m-%d')
         order by goalprice desc
-        limit 8`
+        limit 8;`
 
     return conpro(query);
 }
