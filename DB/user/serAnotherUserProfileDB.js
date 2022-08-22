@@ -28,29 +28,26 @@ function anotherProfile(userID) {
 
 function anotherUploadProject(userID, myID) {
     const query =
-        `select 
-        percent,project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
-        (select
-            (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
-                from project p
-                    join category c
-                        on p.cateIndex = c.cateIndex
-                    join user u
-                        on u.userID = p.userID
-                    join userProfile uP
-                        on u.userID = uP.userID
-                where u.userID = '${userID}') as project
-                left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
-                on hc.projectIndex = project.projectIndex;;
+        `select
+        (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID,
+        (select heartCheck from heart where userID = '${myID}' and projectIndex = p.projectIndex) as heartCheck
+            from project p
+                join category c
+                    on p.cateIndex = c.cateIndex
+                join user u
+                    on u.userID = p.userID
+                join userProfile uP
+                    on u.userID = uP.userID
+            where u.userID = '${userID}'
     `
     return conpro(query);
 }
 
 function anotherBuyProject(userID, myID) {
     const query = `
-    select percent,project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
-        (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
-    from \`order\` o
+    select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
+,(select heartCheck from heart where userID = '${myID}' and projectIndex = p.projectIndex) as heartCheck
+from \`order\` o
         join project p
             on o.projectIndex = p.projectIndex
 
@@ -62,9 +59,7 @@ function anotherBuyProject(userID, myID) {
             on u.userID = uP.userID
     where o.userID = '${userID}'
     group by o.projectIndex
-    order by endDate desc) as project
-        left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
-            on hc.projectIndex = project.projectIndex;`
+    order by endDate desc`
     return conpro(query);
 }
 

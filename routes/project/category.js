@@ -16,6 +16,7 @@ router.get('/', wrapper(async function(req, res) {
 // 전체 상품 읽어오기
 router.get('/all', wrapper(async function (req, res) {
     const userID = req.userID;
+    console.log(userID);
     let f = await db.readCategory(userID);
 
     res.send(f);
