@@ -42,9 +42,18 @@ function oneCategory(cateName, userID) {
     return conpro(query);
 }
 
+// 전체 카테고리 불러오기
+function readAll() {
+    const query =
+        `select name,group_concat(detailName) as catename from category group by name;`
+
+    return conpro(query);
+}
+
 
 
 module.exports = {
     readCategory,
-    oneCategory
+    oneCategory,
+    readAll
 } 

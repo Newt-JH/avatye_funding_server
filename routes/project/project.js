@@ -22,8 +22,8 @@ router.post('/createProject', wrapper(async function (req, res) {
     const categoryindex = await db.findCateIndex(category, detailcategory);
     console.log(categoryindex);
     const f = await db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag, contents, startDate, endDate, goalprice);
-    console.log(f[0][0].proIndex)
-    const projectId = f[0][0].proIndex;
+    console.log(f.insertId);
+    const projectId = f.insertId;
     // 선물 등록
     if (giftData[0].giftTitle !== '') {
         giftData.map((item) => {
