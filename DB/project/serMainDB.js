@@ -9,19 +9,16 @@ const trans = cons.tran;
 // 일단 목표 금액이 가장 높은 프로젝트 표시
 function mdProject(userID) {
     const query =
-        `select percent,project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,name,project.userID,hc.heartCheck
-        from (select (project.nowPrice/project.goalPrice * 100) as percent,
-                project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,c.name,uP.userID
-                from project
-                    join userProfile uP
-                        on project.userID = uP.userID
-                    join category c
-                        on project.cateIndex = c.cateIndex
-                where endDate > now()
-                order by goalprice desc
-                limit 8) as project
-                    left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
-                        on hc.projectIndex = project.projectIndex;`
+        `select (project.nowPrice/project.goalPrice * 100) as percent,
+        project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = project.projectIndex) as heartCheck
+        from project
+            join userProfile uP
+                on project.userID = uP.userID
+            join category c
+                on project.cateIndex = c.cateIndex
+        where endDate > now()
+        order by goalprice desc
+        limit 8`
 
     return conpro(query);
 }
