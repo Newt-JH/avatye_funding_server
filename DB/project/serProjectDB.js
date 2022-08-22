@@ -28,7 +28,11 @@ function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, i
     const beginDate = moment(startDate).format('YYYY-MM-DD');
     const theEndDate = moment(endDate).format('YYYY-MM-DD');
     console.log(categoryindex, userDIV, longTitle, shortTitle, summary, imgUrl, searchTag, contents, beginDate, theEndDate, goalprice);
-    const query = `call createProject ('${categoryindex}','${userDIV}','${longTitle}','${shortTitle}','${summary}','${imgUrl}','${searchTag}', '${contents}' ,'${beginDate}', '${theEndDate}', '${goalprice}');`
+    
+    const query = `
+    insert into
+    project(cateIndex,userID,longTitle,shortTitle,summary,profileIMG,searchTag, contents, beginDate, endDate, goalPrice)
+    values ('${categoryindex}','${userDIV}','${longTitle}','${shortTitle}','${summary}','${imgUrl}','${searchTag}', '${contents}' ,'${beginDate}', '${theEndDate}', '${goalprice}');`
     return conpro(query);
 }
 

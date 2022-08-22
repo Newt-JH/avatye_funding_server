@@ -74,9 +74,9 @@ function duplicateCheck(method, id) {
 };
 
 // 정보 수정
-function userChange(which,key,userID) {
-    const query = `call user${which}Change('${key}','${userID}');`
-    return conpro(query);
+function userUpdate(userID,profileImage,nickName,comment,private,phone,password) {
+    const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}');`
+    con(query);
 }
 
 module.exports = {
@@ -87,5 +87,5 @@ module.exports = {
     loginEmail,
     readUserDIV,
     loginNickname,
-    userChange
+    userUpdate,
 }

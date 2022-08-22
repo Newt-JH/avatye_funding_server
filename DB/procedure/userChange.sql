@@ -1,63 +1,28 @@
-drop procedure userNickChange;
+drop procedure userChange;
 
 DELIMITER $$
-create procedure userNickChange(IN which varchar(50),ID varchar(20))
+create procedure userChange(IN ID varchar(30),inprofileImage varchar(200),innickName varchar(30),incomment varchar(100),inprivate varchar(10),inphone varchar(30),inpass varchar(200))
 begin
-        update userProfile set userProfile.nickName = which where userProfile.userID = ID;
-end $$
-DELIMITER;
+        declare proIMG varchar(200);
+        declare nick varchar(30);
+        declare comments varchar(100);
+        declare pri varchar(10);
+        declare pho varchar(30);
+        declare pass varchar(200);
 
+            set proIMG = if(inprofileImage = 'null',(select profileImage from userProfile where userID = ID),inprofileImage);
+            set nick = if(innickName = 'null',(select nickName from userProfile where userID = ID),innickName);
+            set comments = if(incomment = 'null',(select userProfile.comment from userProfile where userID = ID),incomment);
+            set pri = if(inprivate = 'null',(select private from userProfile where userID = ID),inprivate);
+            set pho = if(inphone = 'null',(select phone from userProfile where userID = ID),inphone);
+            set pass = if(inpass = 'null',(select user.password from user where userID = ID),inpass);
 
-drop procedure userProfileImageChange;
-
-DELIMITER $$
-create procedure userProfileImageChange(IN which varchar(50),ID varchar(20))
-begin
-        update userProfile set userProfile.profileImage = which where userProfile.userID = ID;
-end $$
-DELIMITER;
-
-drop procedure userCommentChange;
-
-DELIMITER $$
-create procedure userCommentChange(IN which varchar(50),ID varchar(20))
-begin
-        update userProfile set userProfile.comment = which where userProfile.userID = ID;
-end $$
-DELIMITER;
-
-drop procedure userPrivateChange;
-
-DELIMITER $$
-create procedure userPrivateChange(IN which boolean,ID varchar(20))
-begin
-        update userProfile set userProfile.private = which where userProfile.userID = ID;
-end $$
-DELIMITER;
-
-drop procedure userPhoneChange;
-
-DELIMITER $$
-create procedure userPhoneChange(IN which varchar(20),ID varchar(20))
-begin
-        update userProfile set userProfile.phone = which where userProfile.userID = ID;
-end $$
-DELIMITER;
-
-drop procedure userEmailChange;
-
-DELIMITER $$
-create procedure userEmailChange(IN which varchar(50),ID varchar(20))
-begin
-        update user set user.email = which where user.userID = ID;
-end $$
-DELIMITER;
-
-drop procedure userPasswordChange;
-
-DELIMITER $$
-create procedure userPasswordChange(IN which varchar(200),ID varchar(20))
-begin
-        update user set user.password = which where user.userID = ID;
+        update userProfile set userProfile.profileImage = proIMG,
+                               userProfile.nickName = nick,
+                               userProfile.comment = comments,
+                               userProfile.private = pri,
+                               userProfile.phone = pho
+                           where userProfile.userID = ID;
+        update user set user.password = pass where userID = ID;
 end $$
 DELIMITER;

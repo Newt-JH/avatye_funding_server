@@ -143,24 +143,21 @@ router.post('/kakao', wrapper(async (req, res) => {
 }));
 
 // 유저 정보 수정
-router.put('/update/which=:which&key=:key', wrapper(async function (req, res) {
+router.put('/update', wrapper(async function (req, res) {
   const userID = req.userID;
-  const which = req.params.which;
-  const key = req.params.key;
-  let password = "";
+  const rb = req.body;
 
-  if (which === "Password") {
-    // 비밀번호 암호화 하기
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(key, salt);
+  const salt = await bcrypt.genSalt(10);
 
-    const f = await db.userChange(which, password, userID);
-    res.send(f);
-  } else {
-    const f = await db.userChange(which, key, userID);
-    res.send(f);
-  }
+  let profileImage = rb.profileImage === undefined ? 'null': rb.profileImage;
+  let nickName = rb.nickName === undefined ? 'null': rb.nickName;
+  let comment = rb.comment === undefined ? 'null': rb.comment;
+  let private = rb.private === undefined ? 'null': rb.private;
+  let phone = rb.phone === undefined ? 'null': rb.phone;
+  let password = rb.password === undefined ? 'null': await bcrypt.hash(rb.password, salt);
+  console.log(password);
+  db.userUpdate(userID,profileImage,nickName,comment,private,phone,password);
+  res.send("ok");
 }));
-
 
 module.exports = router;
