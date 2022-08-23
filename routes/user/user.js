@@ -160,4 +160,31 @@ router.put('/update', wrapper(async function (req, res) {
   res.send("ok");
 }));
 
+// 배송지 등록
+router.post('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const userName = rb.userName;
+  const address = rb.address;
+  const phone = rb.phone;
+
+  db.addShipping(userID,userName,address,phone);
+  res.send("ok");
+  
+}));
+
+// 배송지 수정
+router.put('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const shippingIndex = rb.shippingIndex;
+  const userName = rb.userName;
+  const address = rb.address;
+  const phone = rb.phone;
+
+  db.updateShipping(shippingIndex,userID,userName,address,phone);
+  res.send("ok");
+  
+}));
+
 module.exports = router;
