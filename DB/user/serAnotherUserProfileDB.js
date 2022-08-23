@@ -18,11 +18,7 @@ function anotherPage(userID) {
 
 function anotherProfile(userID) {
     const query =
-        `select profileImage,nickName,Date 
-    from userProfile
-        join user u 
-            on userProfile.userID = u.userID
-    where u.userID = "${userID}";`
+        `call anotherProfile('${userID}');`
     return conpro(query);
 }
 

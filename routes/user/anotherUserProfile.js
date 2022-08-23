@@ -9,7 +9,6 @@ const wrapper = wrap.wrapper;
 router.get('/:id', wrapper(async function (req, res) {
     userID = req.params.id;
     const userComment = await db.anotherPage(userID);
-    console.log(userComment[0][0]);
     return res.send(userComment[0][0]);
 }
 ));
@@ -22,9 +21,9 @@ router.get('/:id/profile', wrapper(async function (req, res) {
     const upLoadCount = await anotherdb.myUploadCount(userID);
     const buyCount = await anotherdb.myBuyCount(userID);
     const resData = {
-        userProfile: userProfile[0],
-        upLoadCount: upLoadCount[0],
-        buyCount: buyCount[0]
+        userProfile: userProfile[0][0],
+        upLoadCount: upLoadCount[0][0],
+        buyCount: buyCount[0][0]
     }
     return res.send(resData);
 }

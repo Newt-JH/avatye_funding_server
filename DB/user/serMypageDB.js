@@ -48,7 +48,7 @@ function myUploadProject(userID) {
 // 내가 올린 프로젝트 개수
 function myUploadCount(userID) {
     const query =
-        `select count(*) as count from project where userID = '${userID}';`
+        `call uploadCount('${userID}');`
     return conpro(query);
 }
 
@@ -76,7 +76,7 @@ function myBuyProject(userID) {
 // 내가 후원한 프로젝트 개수
 function myBuyCount(userID) {
     const query =
-        `Select count(*) as count from (select count(*) as count from \`order\` where userID = '${userID}' group by projectIndex) as total;`
+        `call buyCount('${userID}');`
     return conpro(query);
 }
 
