@@ -24,38 +24,12 @@ function anotherProfile(userID) {
 
 function anotherUploadProject(userID, myID) {
     const query =
-        `select
-        (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID,
-        (select heartCheck from heart where userID = '${myID}' and projectIndex = p.projectIndex) as heartCheck
-            from project p
-                join category c
-                    on p.cateIndex = c.cateIndex
-                join user u
-                    on u.userID = p.userID
-                join userProfile uP
-                    on u.userID = uP.userID
-            where u.userID = '${userID}'
-    `
+        `call anotherUploadProject('${userID}','${myID}');`
     return conpro(query);
 }
 
 function anotherBuyProject(userID, myID) {
-    const query = `
-    select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
-,(select heartCheck from heart where userID = '${myID}' and projectIndex = p.projectIndex) as heartCheck
-from \`order\` o
-        join project p
-            on o.projectIndex = p.projectIndex
-
-        join category c
-            on p.cateIndex = c.cateIndex
-        join user u
-            on p.userID = u.userID
-        join userProfile uP
-            on u.userID = uP.userID
-    where o.userID = '${userID}'
-    group by o.projectIndex
-    order by endDate desc`
+    const query = `call anotherBuyProject('${userID}','${myID}');`
     return conpro(query);
 }
 
