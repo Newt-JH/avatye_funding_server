@@ -15,14 +15,14 @@ function follow(userID, followedID) {
 
 // 팔로워 리스트
 function followerList(userID) {
-    const query = `select following from follow where followed = '${userID}' and followingCheck = 1;`
+    const query = `call followerList('${userID}');`
 
     return conpro(query);
 }
 
 // 팔로우 한 리스트
 function followingList(userID) {
-    const query = `select followed from follow where following = '${userID}' and followingCheck = 1;`
+    const query = `call followed('${userID}');`
 
     return conpro(query);
 }
