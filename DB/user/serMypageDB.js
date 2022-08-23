@@ -13,35 +13,21 @@ const tran = cons.tran;
 
 // 내 소개
 function myPageComment(userID) {
-    const query = `select comment from userProfile where userID ="${userID}";`
+    const query = `call myPageComment('${userID}');`
     return conpro(query);
 }
 
 // 내 프로필 정보 반환
 function myProfile(userID) {
     const query =
-        `select profileImage,nickName,Date from userProfile
-        join user u 
-            on userProfile.userID = u.userID
-    where u.userID = "${userID}";`
+        `call myProfile('${userID}');`
     return conpro(query);
 }
 
 // 내가 올린 프로젝트
 function myUploadProject(userID) {
     const query =
-        `
-        select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
-        ,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck        
-        from project p
-                    join category c
-                        on p.cateIndex = c.cateIndex
-                    join user u
-                        on u.userID = p.userID
-                    join userProfile uP
-                        on u.userID = uP.userID
-                where u.userID = '${userID}';
-    `
+        `call myUploadProject('${userID}');`
     return conpro(query);
 }
 
@@ -54,22 +40,7 @@ function myUploadCount(userID) {
 
 // 내가 후원한 프로젝트
 function myBuyProject(userID) {
-    const query = `
-    select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
-    ,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck
-    from \`order\` o
-        join project p
-            on o.projectIndex = p.projectIndex
-        join category c
-            on p.cateIndex = c.cateIndex
-        join user u
-            on o.userID = u.userID
-        join userProfile uP
-            on p.userID = uP.userID
-    where o.userID = '${userID}'
-    group by o.projectIndex
-    order by endDate desc
-`
+    const query = `call myBuyProject('${userID}');`
     return conpro(query);
 }
 
@@ -82,14 +53,7 @@ function myBuyCount(userID) {
 
 // 정보 수정 시 반환할 내 정보
 function myInfor(userID) {
-    const query =
-        `select userProfile.*,website,email,
-        pay.userID,bank,accountNumber,pay.userName as payUserName,userBirth,cardNumber,cardEndDate,cardPassword,\`DIV\`,
-        shipIndex,s.userName,address,s.phone as shipPhone,shippingCheck from userProfile
-         left join user u on userProfile.userID = u.userID
-         left join payment pay on userProfile.userID = pay.userID
-         left join shipping s on userProfile.userID = s.userID
-     where userProfile.userID = '${userID}';`
+    const query = `call myInfor('${userID}');`
     return conpro(query);
 }
 

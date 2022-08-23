@@ -8,17 +8,7 @@ const trans = cons.tran;
 // 메인 화면 주목할만한 프로젝트
 // 일단 목표 금액이 가장 높은 프로젝트 표시
 function mdProject(userID) {
-    const query =
-        `select (project.nowPrice/project.goalPrice * 100) as percent,
-        project.projectIndex,longTitle,profileIMG,goalPrice,nowPrice,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = project.projectIndex) as heartCheck
-        from project
-            join userProfile uP
-                on project.userID = uP.userID
-            join category c
-                on project.cateIndex = c.cateIndex
-        where endDate > date_format(now(), '%Y-%m-%d') and beginDate < date_format(now(), '%Y-%m-%d')
-        order by goalprice desc
-        limit 8;`
+    const query = `call mdProject('${userID}');`
 
     return conpro(query);
 }
@@ -26,17 +16,7 @@ function mdProject(userID) {
 // 메인 화면 인기 프로젝트
 // 일단 판매율 가장 높은 프로젝트 표시
 function bestProject() {
-    const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,projectIndex, longTitle,
-    profileIMG, goalPrice,endDate,nickName,c.name,uP.userID, DATE_ADD(NOW(), INTERVAL 9 HOUR) as now
-    from project p
-        join category c
-            on p.cateIndex = c.cateIndex
-        join userProfile uP
-            on p.userID = uP.userID
-    where endDate > now()
-    order by percent desc
-        limit 8;`
+    const query = `call bestProject();`
     return conpro(query);
 }
 

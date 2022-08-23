@@ -9,7 +9,7 @@ router.get('/:id', wrapper(async function (req, res) {
     proIndex = req.params.id;
     let f = await db.datailProject(proIndex);
 
-    res.send(f);
+    res.send(f[0]);
 }));
 
 module.exports = router;

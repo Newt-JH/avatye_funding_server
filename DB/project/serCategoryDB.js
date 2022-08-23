@@ -6,45 +6,29 @@ const con = cons.con;
 const trans = cons.tran;
 
 // 전체 카테고리 불러오기
+function cateAll() {
+    const query = `call cateAll();`
+
+    return conpro(query);
+}
+
+// 전체 카테고리 상품 불러오기
 function readCategory(userID) {
-    const query =
-        `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
-        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck
-        from project p
-            join category c
-                on p.cateIndex = c.cateIndex
-            join userProfile uP
-                on p.userID = uP.userID;`
+    const query = `call readCategory('${userID}');`
 
     return conpro(query);
 }
 
 // 카테고리별 상품 불러오기
 function oneCategory(cateName, userID) {
-    const query = `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
-    profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck
-    from project p
-        join category c
-            on p.cateIndex = c.cateIndex
-        join userProfile uP
-            on p.userID = uP.userID
-    where c.name = '${cateName}';`
+    const query = `call oneCategory('${userID}','${cateName}');`
 
     return conpro(query);
 }
-
-// 전체 카테고리 불러오기
-function readAll() {
-    const query =
-        `select name,group_concat(detailName) as catename from category group by name;`
-
-    return conpro(query);
-}
-
 
 
 module.exports = {
     readCategory,
     oneCategory,
-    readAll
+    cateAll
 } 

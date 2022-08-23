@@ -35,7 +35,7 @@ router.get('/:id/upload', wrapper(async function (req, res) {
     const myID = req.userID;
 
     const upLoadProject = await db.anotherUploadProject(userID, myID);
-    return res.send(upLoadProject);
+    return res.send(upLoadProject[0]);
 
 }));
 
@@ -45,7 +45,7 @@ router.get('/:id/buy', wrapper(async function (req, res) {
     const myID = req.userID;
 
     const buyProject = await db.anotherBuyProject(userID, myID);
-    return res.send(buyProject);
+    return res.send(buyProject[0]);
 
 }));
 

@@ -5,11 +5,11 @@ const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
 
-// 메인 화면 주목할만한 프로젝트
+// 전체 프로젝트
 router.get('/', wrapper(async function(req, res) {
     
-    let f = await db.readAll();
-    res.send(f);
+    let f = await db.cateAll();
+    res.send(f[0]);
     
 }));
 
@@ -19,7 +19,7 @@ router.get('/all', wrapper(async function (req, res) {
     console.log(userID);
     let f = await db.readCategory(userID);
 
-    res.send(f);
+    res.send(f[0]);
 }));
 
 // 카테고리별 상품 읽어오기
@@ -28,7 +28,7 @@ router.get('/:id', wrapper(async function (req, res) {
     const cateName = decodeURIComponent(req.params.id);
     let f = await db.oneCategory(cateName,userID);
 
-    res.send(f);
+    res.send(f[0]);
 }));
 
 module.exports = router;
