@@ -73,6 +73,13 @@ function duplicateCheck(method, id) {
     return conpro(query);
 };
 
+// 비밀번호 맞는지 검사
+function checkPassword(userID) {
+    const query = `select password from user where userID = '${userID}';`
+
+    return conpro(query);
+}
+
 // 정보 수정
 function userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress) {
     const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}','${webAdress}');`
@@ -108,5 +115,6 @@ module.exports = {
     userUpdate,
     addShipping,
     updateShipping,
-    deleteShipping
+    deleteShipping,
+    checkPassword
 }
