@@ -25,13 +25,13 @@ router.post('/login', [
   const password = await db.loginEmail(userEmail);
   let dbPassword = "";
   // 만약 매칭되는 비밀번호가 없다면 ( 아이디가 없다면 ) res로 에러 출력
-  if (password.length === 0) {
+  if (password[0].length === 0) {
     res.send(
       { login: false }
     );
   } else {
     // 매칭되는 비밀번호가 있다면 dbPassword에 값 넣어줌
-    dbPassword = password[0].Password;
+    dbPassword = password[0][0].Password;
     // 유저 입력 비밀번호, 가져온 비밀번호 비교 후 같으면 true 반환
     let loginCheck = await bcrypt.compare(userPassword, dbPassword);
     if (loginCheck === true) {
@@ -41,7 +41,7 @@ router.post('/login', [
         {
           login: loginCheck,
           token: token,
-          nickName: nick[0].nickName
+          nickName: nick[0][0].nickName
         }
       );
     } else {
@@ -83,7 +83,7 @@ router.post('/join',
 
     // 아이디 중복 체크 ( 중복이 아니라면 회원 가입 완료 / 중복이라면 중복이라는 res 출력 )
     const f = await db.duplicateCheck(userInfor.loginMethod, userInfor.email);
-    if (f.length === 0) {
+    if (f[0].length === 0) {
       db.joinEmail(userInfor);
       res.send("OK");
     } else {
@@ -109,13 +109,12 @@ router.post('/kakao', wrapper(async (req, res) => {
   // 해당 계정이 DB에 등록되어있는지 / 없으면 회원가입 / 있으면 로그인
   const f = await db.duplicateCheck(userData.loginMethod, userData.loginID);
 
-  if (f[0] === undefined) {
+  if (f[0][0] === undefined) {
     console.log("언디파인 회원가입 시작");
 
     // kakao 아이디 새로 만들기
     let f = await db.joinkakao(userData);
     console.log("아이디 만들기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-    console.log(f);
     // kakao 아이디 만들다가 오류가 나면 회원가입 오류 반환
     if (f === "ERR") {
       res.send("회원가입 오류");
@@ -127,7 +126,7 @@ router.post('/kakao', wrapper(async (req, res) => {
       res.send({
         login: true,
         token: token,
-        nickName: nick[0].nickName
+        nickName: nick[0][0].nickName
       });
     }
   } else {
@@ -136,31 +135,86 @@ router.post('/kakao', wrapper(async (req, res) => {
     res.send({
       login: true,
       token: token,
-      nickName: nick[0].nickName
+      nickName: nick[0][0].nickName
     });
   };
 
 }));
 
 // 유저 정보 수정
-router.put('/update/which=:which&key=:key', wrapper(async function (req, res) {
+router.put('/update', wrapper(async function (req, res) {
   const userID = req.userID;
-  const which = req.params.which;
-  const key = req.params.key;
-  let password = "";
+  const rb = req.body;
 
-  if (which === "Password") {
-    // 비밀번호 암호화 하기
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(key, salt);
-
-    const f = await db.userChange(which, password, userID);
-    res.send(f);
-  } else {
-    const f = await db.userChange(which, key, userID);
-    res.send(f);
-  }
+  const salt = await bcrypt.genSalt(10);
+  
+  let profileImage = rb.profileImage === undefined ? 'null': rb.profileImage;
+  let nickName = rb.nickName === undefined ? 'null': rb.nickName;
+  let comment = rb.comment === undefined ? 'null': rb.comment;
+  let private = rb.private === undefined ? 'null': rb.private;
+  let phone = rb.phone === undefined ? 'null': rb.phone;
+  let webAdress = rb.webAdress === undefined ? 'null': rb.webAdress;
+  let password = rb.password === undefined ? 'null': await bcrypt.hash(rb.password, salt);
+  db.userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress);
+  res.send("ok");
 }));
 
+// 배송지 등록
+router.post('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const userName = rb.userName;
+  const address = rb.address;
+  const phone = rb.phone;
+
+  db.addShipping(userID,userName,address,phone);
+  res.send("ok");
+  
+}));
+
+// 배송지 수정
+router.put('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const shippingIndex = rb.shippingIndex;
+  const userName = rb.userName;
+  const address = rb.address;
+  const phone = rb.phone;
+
+  db.updateShipping(shippingIndex,userID,userName,address,phone);
+  res.send("ok");
+  
+}));
+
+// 배송지 삭제
+router.delete('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const shippingIndex = rb.shippingIndex;
+
+  db.deleteShipping(shippingIndex,userID);
+  res.send("ok");
+  
+}));
+
+// 비밀번호 중복 체크
+router.get('/passwordcheck', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+
+  let f = await db.checkPassword(userID);
+  let passCheck = await bcrypt.compare(rb.password, f[0][0].password);
+
+  if(f[0][0].password === null || f[0][0].password === ""){
+    res.send("ok")
+  }else{
+    if(passCheck){
+      res.send("ok")
+    }else{
+      res.send("no")
+    }
+  }
+  
+}));
 
 module.exports = router;

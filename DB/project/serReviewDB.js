@@ -7,21 +7,14 @@ const trans = cons.tran;
 
 // 전체 리뷰 or 업데이트 불러오기
 function readReview(which,proIndex) {
-    const query =
-        `select review.*,nickName
-        from review
-        join userProfile uP on review.userID = uP.userID
-          where reviewDIV = '${which}' and projectIndex = '${proIndex}';`
+    const query = `call readReview('${which}','${proIndex}');`
 
     return conpro(query);
 }
 
 // 리뷰 or 업데이트 등록
 function uploadReview(proIndex,userID,comment,which) {
-    const query =
-        `insert 
-        into review(projectIndex, userID, comment, reviewDiv,uploadDate) 
-        VALUES ('${proIndex}','${userID}','${comment}','${which}',DATE_ADD(NOW(), INTERVAL 9 HOUR));`
+    const query = `call uploadReview('${proIndex}','${userID}','${comment}','${which}');`
 
     con(query);
 }

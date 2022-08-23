@@ -53,7 +53,7 @@ const readToken = wrapper( async (req,res,next) => {
 // 프로젝트들의 경우, 무조건 참이어야 하지는 않으므로 오류 미반환
 const errReturn = (req,res,next) => {
   if(req.err){
-    return res.send({ err: req.err });
+    return res.status(401).send({ err: req.err });
   }
   next();
 }
@@ -92,7 +92,7 @@ let corsOptions = {
 }
 
 app.use(readToken);
-app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/uploadReview','/review/uploadUpdate'],errReturn);
+app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/comunity','/review/update','/user/shipping','/user/passwordCheck'],errReturn);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);

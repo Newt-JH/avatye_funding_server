@@ -19,7 +19,7 @@ router.get('/follower', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.followerList(userID);
-    return res.send(f);
+    return res.send(f[0]);
 
 }))
 
@@ -28,7 +28,7 @@ router.get('/following', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.followingList(userID);
-    return res.send(f);
+    return res.send(f[0]);
 
 }))
 
@@ -37,7 +37,7 @@ router.get('/anotherfollower/:id', wrapper(async function (req, res) {
     const userID = req.params.id;
 
     let f = await db.followerList(userID);
-    return res.send(f);
+    return res.send(f[0]);
 
 }))
 
@@ -46,7 +46,7 @@ router.get('/anotherfollowing/:id', wrapper(async function (req, res) {
     const userID = req.params.id;
 
     let f = await db.followingList(userID);
-    return res.send(f);
+    return res.send(f[0]);
 
 }))
 

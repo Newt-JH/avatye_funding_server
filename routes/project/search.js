@@ -8,15 +8,12 @@ const wrapper = wrap.wrapper;
 router.get('/:id', wrapper(async function (req, res) {
     const userID = req.userID;
     const search = decodeURIComponent(req.params.id); 
-    console.log(search);
     if(search.slice(0,1) === "샵"){
-        let f = await db.searchKeyword(search,userID);
-        res.send(f);
+        let f = await db.searchKeyword(search.slice(1),userID);
+        res.send(f[0]);
     }else{
-        console.log("진입");
         let f = await db.searchTitleSummary(search,userID);
-        console.log(f);
-        res.send(f);
+        res.send(f[0]);
     }
 
 }));

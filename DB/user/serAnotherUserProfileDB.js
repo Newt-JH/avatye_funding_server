@@ -12,59 +12,24 @@ const con = cons.con;
 const tran = cons.tran;
 
 function anotherPage(userID) {
-    const query = `select comment from userProfile where userID ="${userID}";`
+    const query = `call AnotherPageComment('${userID}');`
     return conpro(query);
 }
 
 function anotherProfile(userID) {
     const query =
-        `select profileImage,nickName,Date 
-    from userProfile
-        join user u 
-            on userProfile.userID = u.userID
-    where u.userID = "${userID}";`
+        `call anotherProfile('${userID}');`
     return conpro(query);
 }
 
 function anotherUploadProject(userID, myID) {
     const query =
-        `select 
-        percent,project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
-        (select
-            (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
-                from project p
-                    join category c
-                        on p.cateIndex = c.cateIndex
-                    join user u
-                        on u.userID = p.userID
-                    join userProfile uP
-                        on u.userID = uP.userID
-                where u.userID = '${userID}') as project
-                left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
-                on hc.projectIndex = project.projectIndex;;
-    `
+        `call anotherUploadProject('${userID}','${myID}');`
     return conpro(query);
 }
 
 function anotherBuyProject(userID, myID) {
-    const query = `
-    select percent,project.projectIndex,profileIMG,name,nickName,longTitle,summary,goalPrice,nowPrice,endDate,userID,hc.heartCheck from
-        (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,p.longTitle,summary,goalPrice,nowPrice,endDate,uP.userID
-    from \`order\` o
-        join project p
-            on o.projectIndex = p.projectIndex
-
-        join category c
-            on p.cateIndex = c.cateIndex
-        join user u
-            on p.userID = u.userID
-        join userProfile uP
-            on u.userID = uP.userID
-    where o.userID = '${userID}'
-    group by o.projectIndex
-    order by endDate desc) as project
-        left join (select projectIndex,heartCheck from heart where userID = '${myID}') as hc
-            on hc.projectIndex = project.projectIndex;`
+    const query = `call anotherBuyProject('${userID}','${myID}');`
     return conpro(query);
 }
 

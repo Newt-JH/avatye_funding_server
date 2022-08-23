@@ -12,14 +12,14 @@ const tran = cons.tran;
 
 // 유저 전체 읽기
 function readUser() {
-    const query = `select * from user`
+    const query = `call readUser();`
 
     return conpro(query);
 }
 
 // 토큰 발급에 필요한 유저 판별값 가져오기
 function readUserDIV(loginMethod, loginID) {
-    const query = `select userID from loginPath where loginMethod = "${loginMethod}" and loginID = "${loginID}";`
+    const query = `call readUserDIV('${loginMethod}','${loginID}');`
     return conpro(query);
 }
 
@@ -51,7 +51,7 @@ function joinEmail(ud) {
 
 // 이메일 로그인
 function loginEmail(email) {
-    const query = `select Password from user where Email = "${email}"`
+    const query = `call loginEmail('${email}');`
 
     return conpro(query);
 }
@@ -60,7 +60,7 @@ function loginEmail(email) {
 async function loginNickname(loginMethod, loginID) {
     try {
         const f = await readUserDIV(loginMethod, loginID);
-        const query = `select nickName from userProfile where userID = "${f[0].userID}";`
+        const query = `call loginNickname('${f[0][0].userID}');`
         return conpro(query);
     } catch (err) {
         console.log(err);
@@ -69,14 +69,39 @@ async function loginNickname(loginMethod, loginID) {
 
 // 메소드 별 아이디가 있는지 없는지 여부 파악하는 곳
 function duplicateCheck(method, id) {
-    const query = `select * from loginPath where loginMethod = "${method}" and loginID = "${id}";`
+    const query = `call duplicateCheck('${method}','${id}');`
     return conpro(query);
 };
 
-// 정보 수정
-function userChange(which,key,userID) {
-    const query = `call user${which}Change('${key}','${userID}');`
+// 비밀번호 맞는지 검사
+function checkPassword(userID) {
+    const query = `call checkPassword('${userID}');`
+
     return conpro(query);
+}
+
+// 정보 수정
+function userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress) {
+    const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}','${webAdress}');`
+    con(query);
+}
+
+// 배송지 등록
+function addShipping(userID,name,adress,phone) {
+    const query = `call addShipping('${userID}','${name}','${adress}','${phone}');`
+    con(query);
+}
+
+// 배송지 수정
+function updateShipping(shippingIndex,userID,name,adress,phone) {
+    const query = `call updateShipping('${shippingIndex}','${userID}','${name}','${adress}','${phone}');`
+    con(query);
+}
+
+// 배송지 삭제
+function deleteShipping(shippingIndex,userID) {
+    const query = `call deleteShipping('${shippingIndex}','${userID}');`
+    con(query);
 }
 
 module.exports = {
@@ -87,5 +112,9 @@ module.exports = {
     loginEmail,
     readUserDIV,
     loginNickname,
-    userChange
+    userUpdate,
+    addShipping,
+    updateShipping,
+    deleteShipping,
+    checkPassword
 }

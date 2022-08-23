@@ -5,7 +5,7 @@ const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
 // 좋아요 추가 / 삭제
-router.get('/add/:id', wrapper(async function (req, res) {
+router.post('/:id', wrapper(async function (req, res) {
     const proIndex = req.params.id;
     const userID = req.userID;
 

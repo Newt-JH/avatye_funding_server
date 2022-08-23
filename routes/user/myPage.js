@@ -9,7 +9,7 @@ router.get('/', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const userComment = await db.myPageComment(userID);
-    return res.send(userComment[0]);
+    return res.send(userComment[0][0]);
 
 }));
 
@@ -23,9 +23,9 @@ router.get('/profile', wrapper(async function (req, res) {
     // comment > 글 등록 시 창작자 소개 사용
     const userComment = await db.myPageComment(userID);
     const resData = {
-        userProfile: userProfile[0],
-        upLoadCount: upLoadCount[0],
-        buyCount: buyCount[0],
+        userProfile: userProfile[0][0],
+        upLoadCount: upLoadCount[0][0],
+        buyCount: buyCount[0][0],
         userComment: userComment[0]
     }
     return res.send(resData);
@@ -37,7 +37,7 @@ router.get('/upload', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const upLoadProject = await db.myUploadProject(userID);
-    return res.send(upLoadProject);
+    return res.send(upLoadProject[0]);
 
 }));
 
@@ -46,7 +46,7 @@ router.get('/buy', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const buyProject = await db.myBuyProject(userID);
-    return res.send(buyProject);
+    return res.send(buyProject[0]);
 
 }));
 
@@ -55,7 +55,7 @@ router.get('/userInfor', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const userInfor = await db.myInfor(userID);
-    return res.send(userInfor);
+    return res.send(userInfor[0]);
 
 }));
 

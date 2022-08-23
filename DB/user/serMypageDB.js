@@ -13,85 +13,47 @@ const tran = cons.tran;
 
 // 내 소개
 function myPageComment(userID) {
-    const query = `select comment from userProfile where userID ="${userID}";`
+    const query = `call myPageComment('${userID}');`
     return conpro(query);
 }
 
 // 내 프로필 정보 반환
 function myProfile(userID) {
     const query =
-        `select profileImage,nickName,Date from userProfile
-        join user u 
-            on userProfile.userID = u.userID
-    where u.userID = "${userID}";`
+        `call myProfile('${userID}');`
     return conpro(query);
 }
 
 // 내가 올린 프로젝트
 function myUploadProject(userID) {
     const query =
-        `
-        select percent,project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
-             (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
-        from project p
-            join category c
-                on p.cateIndex = c.cateIndex
-            join user u
-                on u.userID = p.userID
-            join userProfile uP
-                on u.userID = uP.userID
-        where u.userID = '${userID}') as project
-        left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
-                    on hc.projectIndex = project.projectIndex;
-    `
+        `call myUploadProject('${userID}');`
     return conpro(query);
 }
 
 // 내가 올린 프로젝트 개수
 function myUploadCount(userID) {
     const query =
-        `select count(*) as count from project where userID = '${userID}';`
+        `call uploadCount('${userID}');`
     return conpro(query);
 }
 
 // 내가 후원한 프로젝트
 function myBuyProject(userID) {
-    const query = `
-    select percent,project.projectIndex,profileIMG,name,nickName,userID,longTitle,summary,goalPrice,nowPrice,endDate,hc.heartCheck from
-       (select  (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex,profileIMG,c.name,uP.nickName,uP.userID,p.longTitle,summary,goalPrice,nowPrice,endDate
-    from \`order\` o
-        join project p
-            on o.projectIndex = p.projectIndex
-        join category c
-            on p.cateIndex = c.cateIndex
-        join user u
-            on o.userID = u.userID
-        join userProfile uP
-            on p.userID = uP.userID
-    where o.userID = '${userID}'
-    group by o.projectIndex
-    order by endDate desc) as project
-        left join (select projectIndex,heartCheck from heart where userID = '${userID}') as hc
-            on hc.projectIndex = project.projectIndex;
-`
+    const query = `call myBuyProject('${userID}');`
     return conpro(query);
 }
 
 // 내가 후원한 프로젝트 개수
 function myBuyCount(userID) {
     const query =
-        `Select count(*) as count from (select count(*) as count from \`order\` where userID = '${userID}' group by projectIndex) as total;`
+        `call buyCount('${userID}');`
     return conpro(query);
 }
 
 // 정보 수정 시 반환할 내 정보
 function myInfor(userID) {
-    const query =
-        `select userProfile.*,website,email,pay.*,s.* from userProfile
-        left join user u on userProfile.userID = u.userID
-        left join payment pay on userProfile.userID = pay.userID
-        left join shipping s on userProfile.userID = s.userID
-    where userProfile.userID = '${userID}';`
+    const query = `call myInfor('${userID}');`
     return conpro(query);
 }
 
