@@ -83,11 +83,13 @@ function myBuyCount(userID) {
 // 정보 수정 시 반환할 내 정보
 function myInfor(userID) {
     const query =
-        `select userProfile.*,website,email,pay.*,s.* from userProfile
-        left join user u on userProfile.userID = u.userID
-        left join payment pay on userProfile.userID = pay.userID
-        left join shipping s on userProfile.userID = s.userID
-    where userProfile.userID = '${userID}';`
+        `select userProfile.*,website,email,
+        pay.userID,bank,accountNumber,pay.userName as payUserName,userBirth,cardNumber,cardEndDate,cardPassword,\`DIV\`,
+        shipIndex,s.userName,address,s.phone as shipPhone,shippingCheck from userProfile
+         left join user u on userProfile.userID = u.userID
+         left join payment pay on userProfile.userID = pay.userID
+         left join shipping s on userProfile.userID = s.userID
+     where userProfile.userID = '${userID}';`
     return conpro(query);
 }
 
