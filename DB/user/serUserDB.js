@@ -79,6 +79,18 @@ function userUpdate(userID,profileImage,nickName,comment,private,phone,password)
     con(query);
 }
 
+// 배송지 등록
+function addShipping(userID,name,adress,phone) {
+    const query = `call addShipping('${userID}','${name}','${adress}','${phone}');`
+    con(query);
+}
+
+// 배송지 수정
+function updateShipping(shippingIndex,userID,name,adress,phone) {
+    const query = `call updateShipping('${shippingIndex}','${userID}','${name}','${adress}','${phone}');`
+    con(query);
+}
+
 module.exports = {
     readUser,
     joinkakao,
@@ -88,4 +100,6 @@ module.exports = {
     readUserDIV,
     loginNickname,
     userUpdate,
+    addShipping,
+    updateShipping
 }
