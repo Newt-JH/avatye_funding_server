@@ -154,9 +154,9 @@ router.put('/update', wrapper(async function (req, res) {
   let comment = rb.comment === undefined ? 'null': rb.comment;
   let private = rb.private === undefined ? 'null': rb.private;
   let phone = rb.phone === undefined ? 'null': rb.phone;
+  let webAdress = rb.webAdress === undefined ? 'null': rb.webAdress;
   let password = rb.password === undefined ? 'null': await bcrypt.hash(rb.password, salt);
-  console.log(password);
-  db.userUpdate(userID,profileImage,nickName,comment,private,phone,password);
+  db.userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress);
   res.send("ok");
 }));
 

@@ -74,8 +74,8 @@ function duplicateCheck(method, id) {
 };
 
 // 정보 수정
-function userUpdate(userID,profileImage,nickName,comment,private,phone,password) {
-    const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}');`
+function userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress) {
+    const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}','${webAdress}');`
     con(query);
 }
 
