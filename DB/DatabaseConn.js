@@ -28,12 +28,11 @@ function conpro(query) {
 function con(query) {
     dataCon.query(query, function (err) {
         if (err) {
+            console.log(err);
             throw err
         }
     })
 }
-
-// 다 promise로 받아야함. 데이터가 왜 안받아지지? 결과물로 처리를 어떻게 할것인지? 고민!
 
 // 트랜젝션
 function tran(query1, query2, query3) {
@@ -66,9 +65,6 @@ function tran(query1, query2, query3) {
         res("OK")
     })
 }
-// 좀 신기함. 간단한 로직같은 것을 넣을 때는 이것 사용 못함.
-// 여러개 했을 때 어떻게 할지 고민. 쿼리가 4개 이상 넣으면 어떻게 넣을지 고민!!!!!
-// 좀더 깔끔하게 ... 이렇게 하면 중간에 로직을 못 넣음. 
 
 module.exports = {
     dataCon,

@@ -73,6 +73,13 @@ function duplicateCheck(method, id) {
     return conpro(query);
 };
 
+// 비밀번호 맞는지 검사
+function checkPassword(userID) {
+    const query = `select password from user where userID = '${userID}';`
+
+    return conpro(query);
+}
+
 // 정보 수정
 function userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress) {
     const query = `call userChange('${userID}','${profileImage}','${nickName}','${comment}','${private}','${phone}','${password}','${webAdress}');`
@@ -91,6 +98,12 @@ function updateShipping(shippingIndex,userID,name,adress,phone) {
     con(query);
 }
 
+// 배송지 삭제
+function deleteShipping(shippingIndex,userID) {
+    const query = `call deleteShipping('${shippingIndex}','${userID}');`
+    con(query);
+}
+
 module.exports = {
     readUser,
     joinkakao,
@@ -101,5 +114,7 @@ module.exports = {
     loginNickname,
     userUpdate,
     addShipping,
-    updateShipping
+    updateShipping,
+    deleteShipping,
+    checkPassword
 }

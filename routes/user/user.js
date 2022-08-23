@@ -148,7 +148,7 @@ router.put('/update', wrapper(async function (req, res) {
   const rb = req.body;
 
   const salt = await bcrypt.genSalt(10);
-
+  
   let profileImage = rb.profileImage === undefined ? 'null': rb.profileImage;
   let nickName = rb.nickName === undefined ? 'null': rb.nickName;
   let comment = rb.comment === undefined ? 'null': rb.comment;
@@ -184,6 +184,37 @@ router.put('/shipping', wrapper(async function (req, res) {
 
   db.updateShipping(shippingIndex,userID,userName,address,phone);
   res.send("ok");
+  
+}));
+
+// 배송지 삭제
+router.delete('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const shippingIndex = rb.shippingIndex;
+
+  db.deleteShipping(shippingIndex,userID);
+  res.send("ok");
+  
+}));
+
+// 비밀번호 중복 체크
+router.get('/passwordcheck', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+
+  let f = await db.checkPassword(userID);
+  let passCheck = await bcrypt.compare(rb.password, f[0].password);
+
+  if(f[0].password === null || f[0].password === ""){
+    res.send("ok")
+  }else{
+    if(passCheck){
+      res.send("ok")
+    }else{
+      res.send("no")
+    }
+  }
   
 }));
 

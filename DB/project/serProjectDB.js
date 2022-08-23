@@ -11,7 +11,9 @@ const trans = cons.tran;
 function readProject(userID) {
     const query =
         `select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
-        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck
+        profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,(select heartCheck from heart where userID = '${userID}' and projectIndex = p.projectIndex) as heartCheck,
+        IF((p.beginDate <= date_format(now(), '%Y-%m-%d') and
+                p.endDate > date_format(now(), '%Y-%m-%d')), 'ing', 'end') as progress
         from project p
             join category c
                 on p.cateIndex = c.cateIndex

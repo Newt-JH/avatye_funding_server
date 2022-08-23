@@ -12,17 +12,13 @@ const con = cons.con;
 const tran = cons.tran;
 
 function anotherPage(userID) {
-    const query = `select comment from userProfile where userID ="${userID}";`
+    const query = `call AnotherPageComment('${userID}');`
     return conpro(query);
 }
 
 function anotherProfile(userID) {
     const query =
-        `select profileImage,nickName,Date 
-    from userProfile
-        join user u 
-            on userProfile.userID = u.userID
-    where u.userID = "${userID}";`
+        `call anotherProfile('${userID}');`
     return conpro(query);
 }
 
