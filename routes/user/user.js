@@ -201,7 +201,6 @@ router.delete('/shipping', wrapper(async function (req, res) {
 // 비밀번호 중복 체크
 router.get('/passwordcheck', wrapper(async function (req, res) {
   const userID = req.userID;
-  const salt = await bcrypt.genSalt(10);
   const rb = req.body;
 
   let f = await db.checkPassword(userID);
