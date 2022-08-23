@@ -8,7 +8,6 @@ const wrapper = wrap.wrapper;
 router.get('/:id', wrapper(async function (req, res) {
     const userID = req.userID;
     const search = decodeURIComponent(req.params.id); 
-    console.log(search);
     if(search.slice(0,1) === "샵"){
         let f = await db.searchKeyword(search.slice(1),userID);
         res.send(f[0]);
