@@ -6,6 +6,13 @@ const con = cons.con;
 const trans = cons.tran;
 
 // 전체 카테고리 불러오기
+function cateAll() {
+    const query = `call cateAll();`
+
+    return conpro(query);
+}
+
+// 전체 카테고리 상품 불러오기
 function readCategory(userID) {
     const query = `call readCategory('${userID}');`
 
@@ -23,4 +30,5 @@ function oneCategory(cateName, userID) {
 module.exports = {
     readCategory,
     oneCategory,
+    cateAll
 } 

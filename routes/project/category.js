@@ -4,6 +4,15 @@ const db = require('../../DB/project/serCategoryDB');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
+
+// 전체 프로젝트
+router.get('/', wrapper(async function(req, res) {
+    
+    let f = await db.cateAll();
+    res.send(f[0]);
+    
+}));
+
 // 전체 상품 읽어오기
 router.get('/all', wrapper(async function (req, res) {
     const userID = req.userID;

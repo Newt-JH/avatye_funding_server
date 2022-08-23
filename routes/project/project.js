@@ -9,7 +9,7 @@ router.get('/', wrapper(async function (req, res, next) {
     const userID = req.userID;
 
     let f = await db.readProject(userID);
-    res.send(f);
+    res.send(f[0]);
 
 }));
 
@@ -20,9 +20,7 @@ router.post('/createProject', wrapper(async function (req, res) {
     const userID = req.userID;
     // 카테고리 인덱스 찾아오기
     const categoryindex = await db.findCateIndex(category, detailcategory);
-    console.log(categoryindex);
-    const f = await db.createProject(categoryindex[0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag, contents, startDate, endDate, goalprice);
-    console.log(f.insertId);
+    const f = await db.createProject(categoryindex[0][0].cateIndex, userID, longTitle, shortTitle, summary, imgUrl, searchTag, contents, startDate, endDate, goalprice);
     const projectId = f.insertId;
     // 선물 등록
     if (giftData[0].giftTitle !== '') {
@@ -39,7 +37,7 @@ router.get('/bestprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.bestProjectList(userID);
-    res.send(f);
+    res.send(f[0]);
 
 }));
 
@@ -47,24 +45,24 @@ router.get('/bestprojectlist', wrapper(async function (req, res) {
 router.get('/newprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
-    let f = await db.newprojectlist(userID);
-    res.send(f);
+    let f = await db.newProjectList(userID);
+    res.send(f[0]);
 }));
 
 // 마감 임박 상품 불러오기
 router.get('/deadlineprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
-    let f = await db.deadlineprojectlist(userID);
-    res.send(f);
+    let f = await db.deadlineProjectList(userID);
+    res.send(f[0]);
 
 }));
 
 // 공개 예정 상품 불러오기
 router.get('/tobeprojectlist', wrapper(async function (req, res) {
 
-    let f = await db.tobeprojectlist(req);
-    res.send(f);
+    let f = await db.tobeProjectList();
+    res.send(f[0]);
 
 }));
 
