@@ -19,7 +19,7 @@ router.get('/list', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.heartList(userID);
-    return res.send(f[0]);
+    return res.send(f);
 }));
 
 module.exports = router;
