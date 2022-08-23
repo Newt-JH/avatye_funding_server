@@ -9,7 +9,8 @@ const wrapper = wrap.wrapper;
 router.get('/:id', wrapper(async function (req, res) {
     userID = req.params.id;
     const userComment = await db.anotherPage(userID);
-    return res.send(userComment[0]);
+    console.log(userComment[0][0]);
+    return res.send(userComment[0][0]);
 }
 ));
 

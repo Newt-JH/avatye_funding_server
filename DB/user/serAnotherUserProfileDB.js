@@ -12,7 +12,7 @@ const con = cons.con;
 const tran = cons.tran;
 
 function anotherPage(userID) {
-    const query = `select comment from userProfile where userID ="${userID}";`
+    const query = `call AnotherPageComment('${userID}');`
     return conpro(query);
 }
 

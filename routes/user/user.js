@@ -187,4 +187,15 @@ router.put('/shipping', wrapper(async function (req, res) {
   
 }));
 
+// 배송지 삭제
+router.delete('/shipping', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+  const shippingIndex = rb.shippingIndex;
+
+  db.deleteShipping(shippingIndex,userID);
+  res.send("ok");
+  
+}));
+
 module.exports = router;

@@ -91,6 +91,12 @@ function updateShipping(shippingIndex,userID,name,adress,phone) {
     con(query);
 }
 
+// 배송지 삭제
+function deleteShipping(shippingIndex,userID) {
+    const query = `call deleteShipping('${shippingIndex}','${userID}');`
+    con(query);
+}
+
 module.exports = {
     readUser,
     joinkakao,
@@ -101,5 +107,6 @@ module.exports = {
     loginNickname,
     userUpdate,
     addShipping,
-    updateShipping
+    updateShipping,
+    deleteShipping
 }
