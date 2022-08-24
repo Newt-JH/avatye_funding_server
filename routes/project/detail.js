@@ -12,4 +12,12 @@ router.get('/:id', wrapper(async function (req, res) {
     res.send(f[0]);
 }));
 
+// 상품 선물 불러오기 부분
+router.get('/gitf/:id', wrapper(async function (req, res) {
+    proIndex = req.params.id;
+    let f = await db.detailGitf(proIndex);
+
+    res.send(f[0]);
+}));
+
 module.exports = router;
