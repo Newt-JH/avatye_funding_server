@@ -92,7 +92,7 @@ let corsOptions = {
 }
 
 app.use(readToken);
-app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/comunity','/review/update','/user/shipping','/user/passwordCheck'],errReturn);
+app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/comunity','/review/update','/user/shipping','/user/passwordCheck','/user/payment'],errReturn);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
@@ -100,7 +100,7 @@ app.use('/project',projectRouter);
 app.use('/mypage', mypageRouter);
 app.use('/u', anotherProfileRouter);
 app.use('/main', mainprojectRouter);
-app.use('/projectdetail',projectDetailRouter);
+app.use('/detail',projectDetailRouter);
 app.use('/heart',heartRouter);
 app.use('/follow',followRouter);
 app.use('/category',categoryRouter);
