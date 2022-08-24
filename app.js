@@ -100,7 +100,7 @@ app.use('/project',projectRouter);
 app.use('/mypage', mypageRouter);
 app.use('/u', anotherProfileRouter);
 app.use('/main', mainprojectRouter);
-app.use('/projectdetail',projectDetailRouter);
+app.use('/detail',projectDetailRouter);
 app.use('/heart',heartRouter);
 app.use('/follow',followRouter);
 app.use('/category',categoryRouter);
