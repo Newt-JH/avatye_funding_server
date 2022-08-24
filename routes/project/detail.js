@@ -13,7 +13,7 @@ router.get('/:id', wrapper(async function (req, res) {
 }));
 
 // 상품 선물 불러오기 부분
-router.get('/gitf/:id', wrapper(async function (req, res) {
+router.get('/gift/:id', wrapper(async function (req, res) {
     proIndex = req.params.id;
     let f = await db.detailGitf(proIndex);
 
