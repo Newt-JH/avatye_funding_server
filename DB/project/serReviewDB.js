@@ -5,21 +5,38 @@ const conpro = cons.conpro;
 const con = cons.con;
 const trans = cons.tran;
 
-// 전체 리뷰 or 업데이트 불러오기
+// 전체 리뷰
 function readReview(which,proIndex) {
     const query = `call readReview('${which}','${proIndex}');`
 
     return conpro(query);
 }
 
-// 리뷰 or 업데이트 등록
+// 전체 업데이트
+function readUpdate(proIndex) {
+    const query = `call readUpdate('${proIndex}');`
+
+    return conpro(query);
+}
+
+// 리뷰 등록
 function uploadReview(proIndex,userID,comment,which) {
     const query = `call uploadReview('${proIndex}','${userID}','${comment}','${which}');`
 
     con(query);
 }
 
+// 업데이트 등록
+function uploadUpdate(proIndex,userID,comment) {
+    const query = `call uploadUpdate('${proIndex}','${userID}','${comment}');`
+
+    con(query);
+}
+
+
 module.exports = {
     readReview,
-    uploadReview
+    uploadReview,
+    readUpdate,
+    uploadUpdate
 } 

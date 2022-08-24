@@ -12,7 +12,14 @@ function datailProject(proIndex) {
     return conpro(query);
 }
 
+// 상품 상세 페이지
+function detailGitf(proIndex) {
+    const query =`call detailGift('${proIndex}');`
+
+    return conpro(query);
+}
 
 module.exports = {
-    datailProject
+    datailProject,
+    detailGitf
 } 
