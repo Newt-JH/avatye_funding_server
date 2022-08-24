@@ -104,6 +104,18 @@ function deleteShipping(shippingIndex,userID) {
     con(query);
 }
 
+// 결제 등록
+function addPayment(userID,bank,accountNumber,userName,userBirth,cardNumber,cardEndDate,cardPassword,div) {
+    const query = `call addPayment('${userID}','${bank}','${accountNumber}','${userName}','${userBirth}','${cardNumber}','${cardEndDate}','${cardPassword}','${div}')`
+    con(query);
+}
+
+// 결제 삭제
+function deletePayment(paymentIndex,userID) {
+    const query = `call deletePayment('${paymentIndex}','${userID}');`
+    con(query);
+}
+
 module.exports = {
     readUser,
     joinkakao,
@@ -116,5 +128,7 @@ module.exports = {
     addShipping,
     updateShipping,
     deleteShipping,
-    checkPassword
+    checkPassword,
+    addPayment,
+    deletePayment
 }
