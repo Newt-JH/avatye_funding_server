@@ -27,6 +27,12 @@ function createProject(categoryindex, userDIV, longTitle, shortTitle, summary, i
     return conpro(query);
 }
 
+// 주문하기
+function insertOrder(projectIndex,giftIndex,userID,paymentIndex,orderPrice,shippingIndex){
+    const query = `call insertOrder('${projectIndex}','${giftIndex}','${userID}','${paymentIndex}','${orderPrice}','${shippingIndex}');`
+    return conpro(query);
+}
+
 // cateIndex 찾기
 function findCateIndex(category, detailcategory) {
     const query = `call findCateIndex('${category}','${detailcategory}');`
@@ -101,5 +107,6 @@ module.exports = {
     searchTitleSummary,
     searchKeyword,
     createGift,
-    readWriterID
+    readWriterID,
+    insertOrder
 } 
