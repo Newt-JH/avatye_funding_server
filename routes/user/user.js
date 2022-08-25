@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../../DB/user/serUserDB');
+const db2 = require('../../DB/user/serMypageDB');
 const util = require('../../util/userUtil');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
@@ -37,11 +38,15 @@ router.post('/login', [
     if (loginCheck === true) {
       const nick = await db.loginNickname("EMAIL", userEmail);
       const token = await util.newToken("EMAIL", userEmail);
+      const div = await db.readUserDIV("EMAIL", userEmail);
+      const profile = await db2.myProfile(div[0][0].userID);
+      db.loginDate(div[0][0].userID);
       res.status(200).send(
         {
           login: loginCheck,
           token: token,
-          nickName: nick[0][0].nickName
+          nickName: nick[0][0].nickName,
+          profileImage: profile[0][0].profileImage
         }
       );
     } else {
@@ -108,7 +113,9 @@ router.post('/kakao', wrapper(async (req, res) => {
 
   // 해당 계정이 DB에 등록되어있는지 / 없으면 회원가입 / 있으면 로그인
   const f = await db.duplicateCheck(userData.loginMethod, userData.loginID);
-
+  console.log("---------------");
+  console.log(f[0][0].userID);
+  console.log("---------------");
   if (f[0][0] === undefined) {
     console.log("언디파인 회원가입 시작");
 
@@ -123,19 +130,25 @@ router.post('/kakao', wrapper(async (req, res) => {
     if (f === "OK") {
       const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
       const token = await util.newToken(userData.loginMethod, userData.loginID);
+      const profile = await db2.myProfile(f[0][0].userID);
+      db.loginDate(f[0][0].userID);
       res.status(201).send({
         login: true,
         token: token,
-        nickName: nick[0][0].nickName
+        nickName: nick[0][0].nickName,
+        profileImage: profile[0][0].profileImage
       });
     }
   } else {
     const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
     const token = await util.newToken(userData.loginMethod, userData.loginID);
+    const profile = await db2.myProfile(f[0][0].userID);
+    db.loginDate(f[0][0].userID);
     res.status(201).send({
       login: true,
       token: token,
-      nickName: nick[0][0].nickName
+      nickName: nick[0][0].nickName,
+      profileImage: profile[0][0].profileImage
     });
   };
 

@@ -56,6 +56,13 @@ function loginEmail(email) {
     return conpro(query);
 }
 
+// 로그인 시 마지막 로그인 시간 업데이트
+function loginDate(userID) {
+    const query = `call lastLoginDate('${userID}')`
+
+    con(query);
+}
+
 // 이메일 로그인 시 닉네임 읽어오기
 async function loginNickname(loginMethod, loginID) {
     try {
@@ -130,5 +137,6 @@ module.exports = {
     deleteShipping,
     checkPassword,
     addPayment,
-    deletePayment
+    deletePayment,
+    loginDate
 }
