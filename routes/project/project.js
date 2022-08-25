@@ -29,6 +29,7 @@ router.post('/createProject', wrapper(async function (req, res) {
         return db.createGift(item.giftCount, item.giftDeliveryDate, item.giftDetail, item.giftPrice, item.giftStock, item.giftTitle, projectId)
     })
     }
+    res.status(201).send('ok');
 
 }));
 
