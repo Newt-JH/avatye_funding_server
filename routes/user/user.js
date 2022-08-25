@@ -38,7 +38,7 @@ router.post('/login', [
     if (loginCheck === true) {
       const nick = await db.loginNickname("EMAIL", userEmail);
       const token = await util.newToken("EMAIL", userEmail);
-      const div = await db.readUserDIV(loginMethod, loginID);
+      const div = await db.readUserDIV("EMAIL", userEmail);
       const profile = await db2.myProfile(div[0][0].userID);
       db.loginDate(div[0][0].userID);
       res.status(200).send(
