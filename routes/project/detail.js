@@ -6,10 +6,12 @@ const wrapper = wrap.wrapper;
 
 // 상품 상세 페이지
 router.get('/:id', wrapper(async function (req, res) {
+
     proIndex = req.params.id;
     const userID = req.userID;
     let f = await db.datailProject(proIndex,userID);
-
+    console.log(f);
+    console.log(proIndex);
     res.status(200).send(f[0]);
 }));
 
