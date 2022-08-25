@@ -10,10 +10,10 @@ router.get('/:id', wrapper(async function (req, res) {
     const search = decodeURIComponent(req.params.id); 
     if(search.slice(0,1) === "#"){
         let f = await db.searchKeyword(search.slice(1),userID);
-        res.send(f[0]);
+        res.status(200).send(f[0]);
     }else{
         let f = await db.searchTitleSummary(search,userID);
-        res.send(f[0]);
+        res.status(200).send(f[0]);
     }
 
 }));

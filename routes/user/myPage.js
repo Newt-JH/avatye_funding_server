@@ -9,7 +9,7 @@ router.get('/', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const userComment = await db.myPageComment(userID);
-    return res.send(userComment[0][0]);
+    return res.status(200).send(userComment[0][0]);
 
 }));
 
@@ -28,7 +28,7 @@ router.get('/profile', wrapper(async function (req, res) {
         buyCount: buyCount[0][0],
         userComment: userComment[0]
     }
-    return res.send(resData);
+    return res.status(200).send(resData);
 
 }));
 
@@ -37,7 +37,7 @@ router.get('/upload', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const upLoadProject = await db.myUploadProject(userID);
-    return res.send(upLoadProject[0]);
+    return res.status(200).send(upLoadProject[0]);
 
 }));
 
@@ -46,7 +46,7 @@ router.get('/buy', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const buyProject = await db.myBuyProject(userID);
-    return res.send(buyProject[0]);
+    return res.status(200).send(buyProject[0]);
 
 }));
 
@@ -55,7 +55,7 @@ router.get('/userInfor', wrapper(async function (req, res) {
     const userID = req.userID;
 
     const userInfor = await db.myInfor(userID);
-    return res.send(userInfor[0]);
+    return res.status(200).send(userInfor[0]);
 
 }));
 
