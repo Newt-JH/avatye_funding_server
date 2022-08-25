@@ -12,7 +12,7 @@ router.get('/which=:which&projectID=:projectID', wrapper(async function (req, re
     console.log(which + "   " + projectID);
 
     const f = await db.readReview(which,projectID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
@@ -21,12 +21,12 @@ router.get('/projectupdate/:projectID', wrapper(async function (req, res) {
     const projectID = req.params.projectID;
 
     const f = await db.readUpdate(projectID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
 // 리뷰 작성
-router.post('/comunity', wrapper(async function (req, res) {
+router.post('/community', wrapper(async function (req, res) {
     const userID = req.userID;
     const rb = req.body;
     const which = rb.which;
@@ -34,7 +34,7 @@ router.post('/comunity', wrapper(async function (req, res) {
     const comment = rb.comment;
 
     db.uploadReview(projectID,userID,comment,which);
-    res.send("ok");
+    res.status(201).send("ok");
 
 }));
 
@@ -52,7 +52,7 @@ router.post('/update', wrapper(async function (req, res) {
         db.uploadUpdate(projectID,userID,comment);
         res.send("ok");
     }else{
-        res.status(430).send({ err: "430 : 업로드한 유저가 아닙니다." })
+        res.status(401).send({ err: "401 : 업로드한 유저가 아닙니다." })
     }
 }));
 

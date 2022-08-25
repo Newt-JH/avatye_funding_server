@@ -37,7 +37,7 @@ router.post('/login', [
     if (loginCheck === true) {
       const nick = await db.loginNickname("EMAIL", userEmail);
       const token = await util.newToken("EMAIL", userEmail);
-      res.send(
+      res.status(200).send(
         {
           login: loginCheck,
           token: token,
@@ -85,9 +85,9 @@ router.post('/join',
     const f = await db.duplicateCheck(userInfor.loginMethod, userInfor.email);
     if (f[0].length === 0) {
       db.joinEmail(userInfor);
-      res.send("OK");
+      res.status(200).send("OK");
     } else {
-      res.send("article");
+      res.status(200).send("article");
     }
 
   }));
@@ -117,13 +117,13 @@ router.post('/kakao', wrapper(async (req, res) => {
     console.log("아이디 만들기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
     // kakao 아이디 만들다가 오류가 나면 회원가입 오류 반환
     if (f === "ERR") {
-      res.send("회원가입 오류");
+      res.status(450).send("회원가입 오류");
     }
     // 트랜젝션 결과가 OK라면 토큰 발급 후 반환
     if (f === "OK") {
       const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
       const token = await util.newToken(userData.loginMethod, userData.loginID);
-      res.send({
+      res.status(201).send({
         login: true,
         token: token,
         nickName: nick[0][0].nickName
@@ -132,7 +132,7 @@ router.post('/kakao', wrapper(async (req, res) => {
   } else {
     const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
     const token = await util.newToken(userData.loginMethod, userData.loginID);
-    res.send({
+    res.status(201).send({
       login: true,
       token: token,
       nickName: nick[0][0].nickName
@@ -156,7 +156,7 @@ router.put('/update', wrapper(async function (req, res) {
   let webAdress = rb.webAdress === undefined ? 'null': rb.webAdress;
   let password = rb.password === undefined ? 'null': await bcrypt.hash(rb.password, salt);
   db.userUpdate(userID,profileImage,nickName,comment,private,phone,password,webAdress);
-  res.send("ok");
+  res.status(201).send("ok");
 }));
 
 // 배송지 등록
@@ -168,7 +168,7 @@ router.post('/shipping', wrapper(async function (req, res) {
   const phone = rb.phone;
 
   db.addShipping(userID,userName,address,phone);
-  res.send("ok");
+  res.status(201).send("ok");
   
 }));
 
@@ -182,7 +182,7 @@ router.put('/shipping', wrapper(async function (req, res) {
   const phone = rb.phone;
 
   db.updateShipping(shippingIndex,userID,userName,address,phone);
-  res.send("ok");
+  res.status(201).send("ok");
   
 }));
 
@@ -193,7 +193,7 @@ router.delete('/shipping', wrapper(async function (req, res) {
   const shippingIndex = rb.shippingIndex;
 
   db.deleteShipping(shippingIndex,userID);
-  res.send("ok");
+  res.status(205).send("ok");
   
 }));
 
@@ -211,7 +211,7 @@ router.post('/payment', wrapper(async function (req, res) {
   let div = rb.div === undefined ? 'null': rb.div;
 
   db.addPayment(userID,bank,accountNumber,userName,userBirth,cardNumber,cardEndDate,cardPassword,div);
-  res.send("ok");
+  res.status(201).send("ok");
   
 }));
 
@@ -222,7 +222,7 @@ router.delete('/payment', wrapper(async function (req, res) {
   const paymentIndex = rb.paymentIndex;
 
   db.deletePayment(paymentIndex,userID);
-  res.send("ok");
+  res.status(205).send("ok");
   
 }));
 
@@ -235,12 +235,12 @@ router.get('/passwordcheck', wrapper(async function (req, res) {
   let passCheck = await bcrypt.compare(rb.password, f[0][0].password);
 
   if(f[0][0].password === null || f[0][0].password === ""){
-    res.send("ok")
+    res.status(200).send("ok")
   }else{
     if(passCheck){
-      res.send("ok")
+      res.status(200).send("ok")
     }else{
-      res.send("no")
+      res.status(204).send("no")
     }
   }
   

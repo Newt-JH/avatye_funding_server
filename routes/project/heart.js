@@ -10,7 +10,7 @@ router.post('/:id', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.heart(userID, proIndex);
-    return res.send(f[0][0]);
+    return res.status(201).send(f[0][0]);
 
 }));
 
@@ -19,7 +19,7 @@ router.get('/list', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.heartList(userID);
-    return res.send(f);
+    return res.status(200).send(f);
 }));
 
 module.exports = router;

@@ -9,7 +9,7 @@ const wrapper = wrap.wrapper;
 router.get('/:id', wrapper(async function (req, res) {
     userID = req.params.id;
     const userComment = await db.anotherPage(userID);
-    return res.send(userComment[0][0]);
+    return res.status(200).send(userComment[0][0]);
 }
 ));
 
@@ -25,7 +25,7 @@ router.get('/:id/profile', wrapper(async function (req, res) {
         upLoadCount: upLoadCount[0][0],
         buyCount: buyCount[0][0]
     }
-    return res.send(resData);
+    return res.status(200).send(resData);
 }
 ));
 
@@ -35,7 +35,7 @@ router.get('/:id/upload', wrapper(async function (req, res) {
     const myID = req.userID;
 
     const upLoadProject = await db.anotherUploadProject(userID, myID);
-    return res.send(upLoadProject[0]);
+    return res.status(200).send(upLoadProject[0]);
 
 }));
 
@@ -45,7 +45,7 @@ router.get('/:id/buy', wrapper(async function (req, res) {
     const myID = req.userID;
 
     const buyProject = await db.anotherBuyProject(userID, myID);
-    return res.send(buyProject[0]);
+    return res.status(200).send(buyProject[0]);
 
 }));
 

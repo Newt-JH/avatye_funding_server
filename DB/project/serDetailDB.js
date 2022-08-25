@@ -6,8 +6,8 @@ const con = cons.con;
 const trans = cons.tran;
 
 // 상품 상세 페이지
-function datailProject(proIndex) {
-    const query =`call datailProject('${proIndex}');`
+function datailProject(proIndex,userID) {
+    const query =`call datailProject('${proIndex}','${userID}');`
 
     return conpro(query);
 }

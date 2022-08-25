@@ -9,7 +9,7 @@ router.get('/', wrapper(async function (req, res, next) {
     const userID = req.userID;
 
     let f = await db.readProject(userID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
@@ -29,6 +29,7 @@ router.post('/createProject', wrapper(async function (req, res) {
         return db.createGift(item.giftCount, item.giftDeliveryDate, item.giftDetail, item.giftPrice, item.giftStock, item.giftTitle, projectId)
     })
     }
+    res.status(201).send('ok');
 
 }));
 
@@ -37,7 +38,7 @@ router.get('/bestprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.bestProjectList(userID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
@@ -46,7 +47,7 @@ router.get('/newprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.newProjectList(userID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 }));
 
 // 마감 임박 상품 불러오기
@@ -54,7 +55,7 @@ router.get('/deadlineprojectlist', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.deadlineProjectList(userID);
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
@@ -62,7 +63,7 @@ router.get('/deadlineprojectlist', wrapper(async function (req, res) {
 router.get('/tobeprojectlist', wrapper(async function (req, res) {
 
     let f = await db.tobeProjectList();
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 
