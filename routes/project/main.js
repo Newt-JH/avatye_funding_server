@@ -10,7 +10,7 @@ router.get('/pointproject', wrapper(async function (req, res) {
     const userID = req.userID;
 
     let f = await db.mdProject(userID);
-    return res.send(f[0]);
+    return res.status(200).send(f[0]);
 
 }));
 
@@ -19,7 +19,7 @@ router.get('/pointproject', wrapper(async function (req, res) {
 router.get('/bestproject', wrapper(async function (req, res) {
 
     let f = await db.bestProject();
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 
 }));
 

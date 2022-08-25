@@ -9,15 +9,15 @@ router.get('/:id', wrapper(async function (req, res) {
     proIndex = req.params.id;
     let f = await db.datailProject(proIndex);
 
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 }));
 
-// 상품 선물 불러오기 부분
+// 상품 선물
 router.get('/gift/:id', wrapper(async function (req, res) {
     proIndex = req.params.id;
     let f = await db.detailGitf(proIndex);
 
-    res.send(f[0]);
+    res.status(200).send(f[0]);
 }));
 
 module.exports = router;

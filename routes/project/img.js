@@ -36,9 +36,9 @@ router.post('/', upload.single('img'), async (req, res) => {
     const image = req.file.location
 
     if (image === undefined) {
-        return res.send("이미지없음");
+        return res.status(204).send("이미지없음");
     }
-    res.send(image);
+    res.status(200).send(image);
 })
 
 
