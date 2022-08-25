@@ -130,21 +130,25 @@ router.post('/kakao', wrapper(async (req, res) => {
     if (f === "OK") {
       const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
       const token = await util.newToken(userData.loginMethod, userData.loginID);
+      const profile = await db2.myProfile(f[0][0].userID);
       db.loginDate(f[0][0].userID);
       res.status(201).send({
         login: true,
         token: token,
-        nickName: nick[0][0].nickName
+        nickName: nick[0][0].nickName,
+        profileImage: profile[0][0].profileImage
       });
     }
   } else {
     const nick = await db.loginNickname(userData.loginMethod, userData.loginID);
     const token = await util.newToken(userData.loginMethod, userData.loginID);
+    const profile = await db2.myProfile(f[0][0].userID);
     db.loginDate(f[0][0].userID);
     res.status(201).send({
       login: true,
       token: token,
-      nickName: nick[0][0].nickName
+      nickName: nick[0][0].nickName,
+      profileImage: profile[0][0].profileImage
     });
   };
 
