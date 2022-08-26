@@ -93,36 +93,6 @@ function userUpdate(userID,profileImage,nickName,comment,private,phone,password,
     con(query);
 }
 
-// 배송지 등록
-function addShipping(userID,name,adress,phone) {
-    const query = `call addShipping('${userID}','${name}','${adress}','${phone}');`
-    con(query);
-}
-
-// 배송지 수정
-function updateShipping(shippingIndex,userID,name,adress,phone) {
-    const query = `call updateShipping('${shippingIndex}','${userID}','${name}','${adress}','${phone}');`
-    con(query);
-}
-
-// 배송지 삭제
-function deleteShipping(shippingIndex,userID) {
-    const query = `call deleteShipping('${shippingIndex}','${userID}');`
-    con(query);
-}
-
-// 결제 등록
-function addPayment(userID,bank,accountNumber,userName,userBirth,cardNumber,cardEndDate,cardPassword,div) {
-    const query = `call addPayment('${userID}','${bank}','${accountNumber}','${userName}','${userBirth}','${cardNumber}','${cardEndDate}','${cardPassword}','${div}')`
-    con(query);
-}
-
-// 결제 삭제
-function deletePayment(paymentIndex,userID) {
-    const query = `call deletePayment('${paymentIndex}','${userID}');`
-    con(query);
-}
-
 module.exports = {
     readUser,
     joinkakao,
@@ -132,11 +102,6 @@ module.exports = {
     readUserDIV,
     loginNickname,
     userUpdate,
-    addShipping,
-    updateShipping,
-    deleteShipping,
     checkPassword,
-    addPayment,
-    deletePayment,
     loginDate
 }
