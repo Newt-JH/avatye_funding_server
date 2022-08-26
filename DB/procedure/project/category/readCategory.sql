@@ -3,7 +3,9 @@ drop procedure readCategory;
 DELIMITER $$
 create procedure readCategory(IN inputUser varchar(50))
 begin
-    select (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
+    select IF((p.beginDate <= date_format(now(), '%Y-%m-%d') and
+                p.endDate > date_format(now(), '%Y-%m-%d')), 'ing', if((p.beginDate > date_format(now(), '%Y-%m-%d')),'begin','end')) as progress,
+        (p.nowPrice/p.goalPrice * 100) as percent,p.projectIndex, longTitle,summary,
         profileIMG, goalPrice,nowPrice,endDate,nickName,c.name,uP.userID,(select heartCheck from heart where userID = inputUser and projectIndex = p.projectIndex) as heartCheck
         from project p
             join category c
