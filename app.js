@@ -71,6 +71,8 @@ var categoryRouter = require('./routes/project/category');
 var searchRouter = require('./routes/project/search');
 var reviewRouter = require('./routes/project/review');
 var orderRouter = require('./routes/project/order');
+var shippingRouter = require('./routes/user/shipping');
+var paymentRouter = require('./routes/user/payment');
 //이미지 저장
 var imgRouter = require('./routes/project/img');
 
@@ -93,7 +95,7 @@ let corsOptions = {
 }
 
 app.use(readToken);
-app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/community','/review/update','/user/shipping','/user/passwordCheck','/user/payment','/order'],errReturn);
+app.use(['/mypage','/heart','/follow','/project/createProject','/user/update','/review/community','/review/update','/user/shipping','/user/passwordCheck','/user/payment','/order','/payment','/shipping'],errReturn);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
@@ -108,6 +110,8 @@ app.use('/category',categoryRouter);
 app.use('/search',searchRouter);
 app.use('/review',reviewRouter);
 app.use('/order',orderRouter);
+app.use('/shipping',shippingRouter);
+app.use('/payment',paymentRouter);
 //이미지
 app.use('/img', imgRouter);
 

@@ -1,7 +1,7 @@
 const { query } = require('express');
 var express = require('express');
 var router = express.Router();
-const db = require('../../DB/project/serMainDB');
+const db = require('../../DB/project/mainDB');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
