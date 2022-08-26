@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../../DB/project/serProjectDB');
+const db = require('../../DB/project/projectDB');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
@@ -14,7 +14,7 @@ router.get('/', wrapper(async function (req, res, next) {
 }));
 
 // 프로젝트 만들기
-router.post('/createProject', wrapper(async function (req, res) {
+router.post('/', wrapper(async function (req, res) {
     const { category, detailcategory, longTitle, shortTitle, summary, searchTag, imgUrl, contents, giftData, endDate, startDate, goalprice } = req.body
     // 토큰 가져오기
     const userID = req.userID;

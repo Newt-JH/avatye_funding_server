@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../../DB/project/serReviewDB');
-const db2 = require('../../DB/project/serProjectDB');
+const db = require('../../DB/project/reviewDB');
+const db2 = require('../../DB/project/projectDB');
 const wrap = require('../../util/wrapper');
 const wrapper = wrap.wrapper;
 
