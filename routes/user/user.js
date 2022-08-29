@@ -172,4 +172,24 @@ router.put('/update', wrapper(async function (req, res) {
   res.status(201).send("ok");
 }));
 
+// 비밀번호 중복 체크
+router.get('/passwordcheck', wrapper(async function (req, res) {
+  const userID = req.userID;
+  const rb = req.body;
+
+  let f = await db.checkPassword(userID);
+  let passCheck = await bcrypt.compare(rb.password, f[0][0].password);
+
+  if(f[0][0].password === null || f[0][0].password === ""){
+    res.status(200).send("ok")
+  }else{
+    if(passCheck){
+      res.status(200).send("ok")
+    }else{
+      res.status(202).send("no")
+    }
+  }
+  
+}));
+
 module.exports = router;

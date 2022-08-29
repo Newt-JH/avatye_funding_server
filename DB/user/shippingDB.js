@@ -11,19 +11,19 @@ const con = cons.con;
 const tran = cons.tran;
 
 // 배송지 등록
-function addShipping(userID,name,adress,phone) {
+function addShipping(userID, name, adress, phone) {
     const query = `call addShipping('${userID}','${name}','${adress}','${phone}');`
     con(query);
 }
 
 // 배송지 수정
-function updateShipping(shippingIndex,userID,name,adress,phone) {
+function updateShipping(shippingIndex, userID, name, adress, phone) {
     const query = `call updateShipping('${shippingIndex}','${userID}','${name}','${adress}','${phone}');`
     con(query);
 }
 
 // 배송지 삭제
-function deleteShipping(shippingIndex,userID) {
+function deleteShipping(shippingIndex, userID) {
     const query = `call deleteShipping('${shippingIndex}','${userID}');`
     con(query);
 }
